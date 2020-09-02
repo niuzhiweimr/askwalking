@@ -2,7 +2,7 @@ package com.cloud.askwalking.gateway.pipline.context.saas;
 
 import com.cloud.askwalking.core.constants.GatewayConstant;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
-import com.cloud.askwalking.core.context.SaasConfigInfo;
+import com.cloud.askwalking.core.domain.SaasConfigInfo;
 import com.cloud.askwalking.gateway.manager.enums.GatewayErrorCode;
 import com.cloud.askwalking.gateway.manager.model.SaasConfigDO;
 import com.cloud.askwalking.gateway.manager.service.SaasConfigService;

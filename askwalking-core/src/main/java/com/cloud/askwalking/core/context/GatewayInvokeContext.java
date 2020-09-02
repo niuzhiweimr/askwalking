@@ -6,6 +6,8 @@ import com.alibaba.cloud.dubbo.metadata.ServiceRestMetadata;
 import com.alibaba.cloud.dubbo.service.DubboGenericServiceFactory;
 import com.cloud.askwalking.core.domain.GatewayMethodDefinition;
 import com.cloud.askwalking.client.domain.R;
+import com.cloud.askwalking.core.domain.SaasConfigInfo;
+import com.cloud.askwalking.core.domain.UseAuthInfo;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

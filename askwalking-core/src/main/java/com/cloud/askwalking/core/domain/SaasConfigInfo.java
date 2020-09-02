@@ -1,4 +1,4 @@
-package com.cloud.askwalking.core.context;
+package com.cloud.askwalking.core.domain;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
