@@ -33,175 +33,175 @@ public class ValidateUtils {
     /**
      * 整数
      */
-    private static final String V_INTEGER = "^-?[1-9]\\d*$";
+    private static final Pattern V_INTEGER =Pattern.compile("^-?[1-9]\\d*$") ;
 
     /**
      * 正整数
      */
-    private static final String V_Z_INTEGER = "^[1-9]\\d*$";
+    private static final Pattern V_Z_INTEGER = Pattern.compile("^[1-9]\\d*$");
 
     /**
      * 负整数
      */
-    private static final String V_F_INTEGER = "^-[1-9]\\d*$";
+    private static final Pattern V_F_INTEGER = Pattern.compile("^-[1-9]\\d*$");
 
     /**
      * 数字
      */
-    private static final String V_NUMBER = "^([+-]?)\\d*\\.?\\d+$";
+    private static final Pattern V_NUMBER = Pattern.compile("^([+-]?)\\d*\\.?\\d+$");
 
     /**
      * 正数
      */
-    private static final String V_Z_NUMBER = "^[1-9]\\d*|0$";
+    private static final Pattern V_Z_NUMBER = Pattern.compile("^[1-9]\\d*|0$");
 
     /**
      * 负数
      */
-    private static final String V_F_NUMBER = "^-[1-9]\\d*|0$";
+    private static final Pattern V_F_NUMBER = Pattern.compile("^-[1-9]\\d*|0$");
 
     /**
      * 浮点数
      */
-    private static final String V_FLOAT = "^([+-]?)\\d*\\.\\d+$";
+    private static final Pattern V_FLOAT = Pattern.compile("^([+-]?)\\d*\\.\\d+$");
 
     /**
      * 正浮点数
      */
-    private static final String V_Z_FLOAT = "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*$";
+    private static final Pattern V_Z_FLOAT = Pattern.compile("^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*$");
 
     /**
      * 负浮点数
      */
-    private static final String V_F_FLOAT = "^-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*)$";
+    private static final Pattern V_F_FLOAT = Pattern.compile("^-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*)$");
 
     /**
      * 非负浮点数（正浮点数 + 0）
      */
-    private static final String V_UN_F_FLOAT = "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0$";
+    private static final Pattern V_UN_F_FLOAT = Pattern.compile("^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0$");
 
     /**
      * 非正浮点数（负浮点数 + 0）
      */
-    private static final String V_UN_Z_FLOAT = "^(-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*))|0?.0+|0$";
+    private static final Pattern V_UN_Z_FLOAT = Pattern.compile("^(-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*))|0?.0+|0$");
 
     /**
      * 邮件
      */
-    private static final String V_EMAIL = "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$";
+    private static final Pattern V_EMAIL = Pattern.compile("^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$");
 
     /**
      * 颜色
      */
-    private static final String V_COLOR = "^[a-fA-F0-9]{6}$";
+    private static final Pattern V_COLOR = Pattern.compile("^[a-fA-F0-9]{6}$");
 
     /**
      * url
      */
-    private static final String V_URL = "^http[s]?:\\/\\/([\\w-]+\\.)+[\\w-]+([\\w-./?%&=]*)?$";
+    private static final Pattern V_URL = Pattern.compile("^http[s]?:\\/\\/([\\w-]+\\.)+[\\w-]+([\\w-./?%&=]*)?$");
 
     /**
      * 仅中文
      */
-    private static final String V_CHINESE = "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D]+$";
+    private static final Pattern V_CHINESE = Pattern.compile("^[\\u4E00-\\u9FA5\\uF900-\\uFA2D]+$");
     /**
      * 仅中文和字母
      */
-    private static final String V_CHINESE_LETTER = "^[A-Za-z\\u4E00-\\u9FA5\\uF900-\\uFA2D]+$";
+    private static final Pattern V_CHINESE_LETTER = Pattern.compile("^[A-Za-z\\u4E00-\\u9FA5\\uF900-\\uFA2D]+$");
     /**
      * 仅ACSII字符
      */
-    private static final String V_ASCII = "^[\\x00-\\xFF]+$";
+    private static final Pattern V_ASCII = Pattern.compile("^[\\x00-\\xFF]+$");
 
     /**
      * 邮编
      */
-    private static final String V_ZIPCODE = "^\\d{6}$";
+    private static final Pattern V_ZIPCODE = Pattern.compile("^\\d{6}$");
 
     /**
      * 手机
      */
-    private static final String V_MOBILE = "^1(3|4|5|7|8)\\d{9}$";
+    private static final Pattern V_MOBILE = Pattern.compile("^1([34578])\\d{9}$");
 
     /**
      * ip地址
      */
-    private static final String V_IP4 = "^(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)$";
+    private static final Pattern V_IP4 = Pattern.compile("^(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)$");
 
     /**
      * 非空
      */
-    private static final String V_NOTEMPTY = "^\\S+$";
+    private static final Pattern V_NOTEMPTY = Pattern.compile("^\\S+$");
 
     /**
      * 图片
      */
-    private static final String V_PICTURE = "(.*)\\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$";
+    private static final Pattern V_PICTURE = Pattern.compile("(.*)\\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$");
 
     /**
      * 压缩文件
      */
-    private static final String V_RAR = "(.*)\\.(rar|zip|7zip|tgz)$";
+    private static final Pattern V_RAR = Pattern.compile("(.*)\\.(rar|zip|7zip|tgz)$");
 
     /**
      * 日期
      */
-    private static final String V_DATE = "^((((1[6-9]|[2-9]\\d)\\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-8]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-)) (20|21|22|23|[0-1]?\\d):[0-5]?\\d:[0-5]?\\d$";
+    private static final Pattern V_DATE = Pattern.compile("^((((1[6-9]|[2-9]\\d)\\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-8]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-)) (20|21|22|23|[0-1]?\\d):[0-5]?\\d:[0-5]?\\d$");
 
     /**
      * QQ号码
      */
-    private static final String V_QQ_NUMBER = "^[1-9]*[1-9][0-9]*$";
+    private static final Pattern V_QQ_NUMBER = Pattern.compile("^[1-9]*[1-9][0-9]*$");
 
     /**
      * 电话号码的函数(包括验证国内区号,国际区号,分机号)
      */
-    private static final String V_TEL = "^(([0\\+]\\d{2,3}-)?(0\\d{2,3})-)?(\\d{7,8})(-(\\d{3,}))?$";
+    private static final Pattern V_TEL = Pattern.compile("^(([0\\+]\\d{2,3}-)?(0\\d{2,3})-)?(\\d{7,8})(-(\\d{3,}))?$");
 
     /**
      * 用来用户注册。匹配由数字、26个英文字母或者下划线组成的字符串
      */
-    private static final String V_USERNAME = "^\\w+$";
+    private static final Pattern V_USERNAME = Pattern.compile("^\\w+$");
 
     /**
      * 字母
      */
-    private static final String V_LETTER = "^[A-Za-z]+$";
+    private static final Pattern V_LETTER = Pattern.compile("^[A-Za-z]+$");
 
     /**
      * 大写字母
      */
-    private static final String V_LETTER_UPPER = "^[A-Z]+$";
+    private static final Pattern V_LETTER_UPPER = Pattern.compile("^[A-Z]+$");
 
     /**
      * 小写字母
      */
-    private static final String V_LETTER_LOWER = "^[a-z]+$";
+    private static final Pattern V_LETTER_LOWER = Pattern.compile("^[a-z]+$");
 
     /**
      * 身份证，弱校验
      */
-    private static final String V_IDCARD = "^(\\d{15}$|^\\d{18}$|^\\d{17}(\\d|X|x))$";
+    private static final Pattern V_IDCARD = Pattern.compile("^(\\d{15}$|^\\d{18}$|^\\d{17}(\\d|X|x))$");
 
     /**
      * 验证密码(数字和英文同时存在)
      */
-    private static final String V_PASSWORD_REG = "[A-Za-z]+[0-9]";
+    private static final Pattern V_PASSWORD_REG = Pattern.compile("[A-Za-z]+[0-9]");
 
     /**
      * 验证密码长度(4-16位)，可以使用字母、数字或特殊字符
      */
-    private static final String V_PASSWORD_LENGTH = "^([A-Z]|[a-z]|[0-9]|[`~!@#$%^&*()+=|{}':;',\\\\\\\\[\\\\\\\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]){4,16}$";
+    private static final Pattern V_PASSWORD_LENGTH = Pattern.compile("^([A-Z]|[a-z]|[0-9]|[`~!@#$%^&*()+=|{}':;',\\\\\\\\[\\\\\\\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]){4,16}$");
 
     /**
      * 验证两位数
      */
-    private static final String V_TWO＿POINT = "^[0-9]+(.[0-9]{2})?$";
+    private static final Pattern V_TWO＿POINT = Pattern.compile("^[0-9]+(.[0-9]{2})?$");
 
     /**
      * 验证一个月的31天
      */
-    private static final String V_31DAYS = "^((0?[1-9])|((1|2)[0-9])|30|31)$";
+    private static final Pattern V_31DAYS = Pattern.compile("^((0?[1-9])|(([12])[0-9])|30|31)$");
 
 
     private ValidateUtils() {
@@ -565,12 +565,11 @@ public class ValidateUtils {
 
 
     /**
-     * @param regex 正则表达式字符串
+     * @param pattern 正则表达式字符串
      * @param str   要匹配的字符串
      * @return 如果str 符合 regex的正则表达式格式,返回true, 否则返回 false;
      */
-    private static boolean match(String regex, String str) {
-        Pattern pattern = Pattern.compile(regex);
+    private static boolean match(Pattern pattern, String str) {
         Matcher matcher = pattern.matcher(str);
         return matcher.matches();
     }
