@@ -1,6 +1,6 @@
 package com.cloud.askwalking.gateway.pipline.context.admin;
 
-import com.cloud.askwalking.core.constants.GatewayConstant;
+import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import com.cloud.askwalking.gateway.pipline.context.common.AbstractSignCheckContextHandler;
 import com.google.common.collect.Sets;

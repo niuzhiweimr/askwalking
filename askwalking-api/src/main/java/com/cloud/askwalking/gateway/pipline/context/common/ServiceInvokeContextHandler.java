@@ -1,9 +1,9 @@
 package com.cloud.askwalking.gateway.pipline.context.common;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.common.domain.R;
 import com.cloud.askwalking.common.exception.ErrorCode;
-import com.cloud.askwalking.core.constants.GatewayConstant;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import com.cloud.askwalking.gateway.pipline.AbstractGatewayContextHandler;
 import com.google.common.collect.Sets;

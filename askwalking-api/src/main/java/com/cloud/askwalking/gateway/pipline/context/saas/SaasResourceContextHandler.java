@@ -1,11 +1,11 @@
 package com.cloud.askwalking.gateway.pipline.context.saas;
 
+import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.common.enums.GatewayErrorCode;
-import com.cloud.askwalking.core.constants.GatewayConstant;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import com.cloud.askwalking.gateway.pipline.AbstractGatewayContextHandler;
-import com.google.common.collect.Sets;
 import com.cloud.askwalking.repository.model.SaasResourceDO;
+import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

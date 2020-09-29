@@ -1,8 +1,8 @@
 package com.cloud.askwalking.gateway.pipline.context.saas;
 
-import com.cloud.askwalking.core.constants.GatewayConstant;
-import com.cloud.askwalking.core.context.GatewayInvokeContext;
+import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.common.exception.ErrorCode;
+import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import com.cloud.askwalking.gateway.pipline.AbstractGatewayContextHandler;
 import com.cloud.askwalking.gateway.pipline.CommonParamParse;
 import com.google.common.collect.Sets;

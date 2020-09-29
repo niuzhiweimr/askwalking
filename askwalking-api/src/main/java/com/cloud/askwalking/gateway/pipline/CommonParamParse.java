@@ -1,8 +1,8 @@
 package com.cloud.askwalking.gateway.pipline;
 
 import com.alibaba.fastjson.JSON;
+import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.common.utils.Base64Utils;
-import com.cloud.askwalking.core.constants.GatewayConstant;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import lombok.extern.slf4j.Slf4j;
 

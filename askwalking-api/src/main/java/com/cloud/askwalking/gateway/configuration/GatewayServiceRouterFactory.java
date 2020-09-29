@@ -1,6 +1,6 @@
 package com.cloud.askwalking.gateway.configuration;
 
-import com.cloud.askwalking.core.constants.GatewayConstant;
+import com.cloud.askwalking.common.constants.GatewayConstant;
 import lombok.extern.slf4j.Slf4j;
 
 /**
