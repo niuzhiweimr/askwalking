@@ -1,18 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : askwalking
- Source Server Type    : MySQL
- Source Server Version : 50729
- Source Host           : 47.106.178.200:55663
- Source Schema         : askwalking
-
- Target Server Type    : MySQL
- Target Server Version : 50729
- File Encoding         : 65001
-
- Date: 13/09/2020 14:32:36
-*/
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
