@@ -31,11 +31,6 @@ public class UserInfoDTO implements Serializable {
     @ApiModelProperty("客户名称")
     private String customerName;
 
-    /**
-     * 对象转map
-     *
-     * @return
-     */
     public Map toMap() {
         String jsonStr = JSONObject.toJSONString(this);
         return JSONObject.parseObject(jsonStr, Map.class);
