@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * @author niuzhiwei
  */
-@Api(tags = "saas平台配置管理")
+@Api(tags = "SAAS配置管理")
 @Slf4j
 @RestController
 public class SaasConfigController {

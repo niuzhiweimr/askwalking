@@ -25,7 +25,7 @@ import java.util.List;
  *
  * @author niuzhiwei
  */
-@Api(tags = "网关API管理")
+@Api(tags = "API配置管理")
 @Slf4j
 @RestController
 public class GatewayApiController {
