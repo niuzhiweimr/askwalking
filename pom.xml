@@ -11,28 +11,21 @@
 
     <groupId>com.cloud.askwalking</groupId>
     <artifactId>askwalking</artifactId>
-    <version>1.0.0</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
     <name>askwalking</name>
 
-    <modules>
-        <module>askwalking-admin</module>
-        <module>askwalking-api</module>
-        <module>askwalking-repository</module>
-        <module>askwalking-oauth</module>
-        <module>askwalking-client</module>
-        <module>askwalking-common</module>
-        <module>askwalking-core</module>
-
-    </modules>
+    <developers>
+        <developer>
+            <name>niuzhiweimr</name>
+            <email>niuzhiwei1314@126.com</email>
+            <url>https://github.com/niuzhiweimr</url>
+        </developer>
+    </developers>
 
     <properties>
-
-        <askwalking-oauth.version>1.0.0</askwalking-oauth.version>
-        <askwalking-core.version>1.0.0</askwalking-core.version>
-        <askwalking-repository.version>1.0.0</askwalking-repository.version>
-        <askwalking-client.version>1.0.0</askwalking-client.version>
-        <askwalking-common.version>1.0.0</askwalking-common.version>
+        <!-- Project revision -->
+        <revision>2.0.0-SNAPSHOT</revision>
 
         <!-- 公共第三方依赖版本  除了java等语言的版本外，按字母表排序 -->
         <java.version>1.8</java.version>
@@ -113,6 +106,16 @@
         <!--私服地址 -->
         <nexus-server-addr>unknown</nexus-server-addr>
     </properties>
+
+    <modules>
+        <module>askwalking-admin</module>
+        <module>askwalking-api</module>
+        <module>askwalking-repository</module>
+        <module>askwalking-oauth</module>
+        <module>askwalking-client</module>
+        <module>askwalking-common</module>
+        <module>askwalking-core</module>
+    </modules>
 
     <!-- maven 上传私服配置或许需要修改 -->
     <distributionManagement>

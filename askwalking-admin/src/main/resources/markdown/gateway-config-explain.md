@@ -1,14 +1,15 @@
 # 网关配置说明
  
-### 1.0版本
+### 2.0.0版本
 
 配置项|key|默认值|可选|说明
 ----|----|-----|----|---
 应用名称|applicationName||必选|调用服务注册名 
+协议|protocol||必选|参数：RPC:(dubbo接口) FEIGN:(Feign接口)
 api类型|apiType||必选|参数 API：(外部接口) ADMIN：(管理后台接口) SAAS：(开放平台接口) 
 请求URI|requestUri||必选|自定义请求URI必须不能重复,建议url加入版本号方便后续接口升级 例：/uid/v1/generator 
 请求方式|requestMethod|GET|可选|参数 GET、POST 
-接口地址|apiInterface||必选|接口全类名,例：com.awservice.openapi.service.TestService 
+接口地址|apiInterface||必选|接口全类名,例：RPC配置：com.awservice.openapi.service.TestService  FEIGN配置：/server-name/test 注:(server-name:服务名称)
 接口版本|apiVersion||可选|接口上定义的版本号必须与此配置版本号对应 
 请求对象|apiRequestClass||必选|接口请求参数对象全类名,例：com.awservice.account.AddAccountRequest 
 方法名称|apiMethod||必选|接口方法,例：test  
