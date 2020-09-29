@@ -18,6 +18,9 @@ public class QueryConfigureApiDTO {
     @ApiModelProperty(value = "应用名称，调用服务注册名")
     private String applicationName;
 
+    @ApiModelProperty(value = "协议", allowableValues = "RPC,FEIGN")
+    private String protocol;
+
     @ApiModelProperty(value = "请求URI")
     private String requestUri;
 

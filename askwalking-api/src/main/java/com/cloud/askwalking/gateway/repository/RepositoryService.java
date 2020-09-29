@@ -1,4 +1,4 @@
-package com.cloud.askwalking.gateway.helper;
+package com.cloud.askwalking.gateway.repository;
 
 import com.cloud.askwalking.repository.model.ConfigureApiDO;
 import com.cloud.askwalking.repository.model.SaasConfigDO;
@@ -7,13 +7,12 @@ import com.cloud.askwalking.repository.model.SaasResourceDO;
 import java.util.List;
 
 /**
- * 1.api变更刷新相关
- * 2.api配置获取相关
- * 3.sass平台配置相关
+ * 1.api配置获取相关
+ * 2.sass平台配置相关
  *
  * @author niuzhiwei
  */
-public interface HelperService {
+public interface RepositoryService {
 
     /**
      * 获取所有API接口配置
@@ -48,5 +47,4 @@ public interface HelperService {
      * @return
      */
     SaasResourceDO getSaasResource(String openId, String requestUri);
-
 }

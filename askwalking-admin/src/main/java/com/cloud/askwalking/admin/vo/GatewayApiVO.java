@@ -23,6 +23,9 @@ public class GatewayApiVO implements Serializable {
     @ApiModelProperty("应用名称")
     private String applicationName;
 
+    @ApiModelProperty(value = "协议")
+    private String protocol;
+
     @ApiModelProperty("API类型")
     private String apiType;
 

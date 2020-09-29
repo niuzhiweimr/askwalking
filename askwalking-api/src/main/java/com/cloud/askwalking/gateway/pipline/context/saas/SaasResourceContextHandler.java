@@ -3,8 +3,8 @@ package com.cloud.askwalking.gateway.pipline.context.saas;
 import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.common.enums.GatewayErrorCode;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
-import com.cloud.askwalking.gateway.helper.HelperService;
 import com.cloud.askwalking.gateway.pipline.AbstractGatewayContextHandler;
+import com.cloud.askwalking.gateway.repository.RepositoryService;
 import com.cloud.askwalking.repository.model.SaasResourceDO;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +31,8 @@ public class SaasResourceContextHandler extends AbstractGatewayContextHandler im
     public boolean handleGatewayInvoke(GatewayInvokeContext gatewayInvokeContext) {
 
         try {
-            HelperService helperService = applicationContext.getBean(HelperService.class);
-            SaasResourceDO saasResource = helperService.getSaasResource(gatewayInvokeContext.getOpenId()
+            RepositoryService repositoryService = applicationContext.getBean(RepositoryService.class);
+            SaasResourceDO saasResource = repositoryService.getSaasResource(gatewayInvokeContext.getOpenId()
                     , gatewayInvokeContext.getRequestURI());
             if (Objects.isNull(saasResource)) {
                 return putDebugErrorResult(gatewayInvokeContext, GatewayErrorCode.SAAS_RESOURCE_IS_NULL);

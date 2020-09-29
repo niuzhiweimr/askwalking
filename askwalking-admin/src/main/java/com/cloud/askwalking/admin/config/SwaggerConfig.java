@@ -52,7 +52,7 @@ public class SwaggerConfig {
                 .apiInfo(gatewayApiInfo())
                 .groupName("网关接口管理")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.cloud.askwalking.gateway.manager.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.cloud.askwalking.admin.controller"))
                 .paths(PathSelectors.any())
                 .build().globalOperationParameters(parameter());
     }

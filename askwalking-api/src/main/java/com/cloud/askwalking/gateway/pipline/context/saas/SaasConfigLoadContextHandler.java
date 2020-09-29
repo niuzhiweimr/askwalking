@@ -4,8 +4,8 @@ import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.common.enums.GatewayErrorCode;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import com.cloud.askwalking.core.domain.SaasConfigInfo;
-import com.cloud.askwalking.gateway.helper.HelperService;
 import com.cloud.askwalking.gateway.pipline.context.common.AbstractConfigLoadContextHandler;
+import com.cloud.askwalking.gateway.repository.RepositoryService;
 import com.cloud.askwalking.repository.model.SaasConfigDO;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
@@ -47,8 +47,8 @@ public class SaasConfigLoadContextHandler extends AbstractConfigLoadContextHandl
                 return putDebugErrorResult(context, GatewayErrorCode.SAAS_TIMESTAMP_IS_NULL);
             }
 
-            HelperService helperService = applicationContext.getBean(HelperService.class);
-            SaasConfigDO saasConfigDO = helperService.getSaasByOpenId(openId);
+            RepositoryService repositoryService = applicationContext.getBean(RepositoryService.class);
+            SaasConfigDO saasConfigDO = repositoryService.getSaasByOpenId(openId);
             if (Objects.isNull(saasConfigDO)) {
                 log.error("[SaasConfigLoadContextHandler] SaasConfigDO isNull");
                 return putDebugErrorResult(context, GatewayErrorCode.SAAS_CONFIG_NON_EXISTENT);

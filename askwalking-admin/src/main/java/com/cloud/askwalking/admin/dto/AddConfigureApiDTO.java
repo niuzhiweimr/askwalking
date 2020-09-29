@@ -22,6 +22,9 @@ public class AddConfigureApiDTO implements Serializable {
     @ApiModelProperty(value = "应用名称，调用服务注册名", required = true)
     private String applicationName;
 
+    @ApiModelProperty(value = "协议", required = true, allowableValues = "RPC,FEIGN")
+    private String protocol;
+
     @NotBlank(message = "添加API,API类型不能空")
     @ApiModelProperty(value = "API类型", required = true, allowableValues = "API,ADMIN,SAAS")
     private String apiType;

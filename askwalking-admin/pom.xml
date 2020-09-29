@@ -21,8 +21,8 @@
         </dependency>
         <dependency>
             <groupId>com.cloud.askwalking</groupId>
-            <artifactId>askwalking-common</artifactId>
-            <version>${askwalking-common.version}</version>
+            <artifactId>askwalking-core</artifactId>
+            <version>${askwalking-core.version}</version>
         </dependency>
         <dependency>
             <groupId>com.cloud.askwalking</groupId>

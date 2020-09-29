@@ -1,19 +1,21 @@
 package com.cloud.askwalking.admin.service.impl;
 
-import com.cloud.askwalking.common.constants.GatewayConstant;
-import com.cloud.askwalking.repository.dao.ConfigureApiMapper;
 import com.cloud.askwalking.admin.dto.AddConfigureApiDTO;
 import com.cloud.askwalking.admin.dto.ModifyConfigureApiDTO;
 import com.cloud.askwalking.admin.dto.QueryConfigureApiDTO;
-import com.cloud.askwalking.common.enums.GatewayErrorCode;
-import com.cloud.askwalking.repository.model.ConfigureApiDO;
-import com.cloud.askwalking.repository.model.ConfigureApiExample;
 import com.cloud.askwalking.admin.service.GatewayApiService;
 import com.cloud.askwalking.admin.vo.GatewayApiVO;
+import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.common.domain.R;
+import com.cloud.askwalking.common.enums.GatewayErrorCode;
 import com.cloud.askwalking.common.exception.ErrorCode;
 import com.cloud.askwalking.common.utils.IDUtil;
 import com.cloud.askwalking.common.utils.ValidateUtils;
+import com.cloud.askwalking.core.HelperService;
+import com.cloud.askwalking.repository.dao.ConfigureApiMapper;
+import com.cloud.askwalking.repository.model.ConfigureApiDO;
+import com.cloud.askwalking.repository.model.ConfigureApiExample;
+import jdk.nashorn.internal.ir.annotations.Reference;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,9 @@ public class GatewayApiServiceImpl implements GatewayApiService {
 
     @Resource
     private ConfigureApiMapper configureApiMapper;
+
+    @Reference
+    private HelperService helperService;
 
     @Override
     public List<ConfigureApiDO> getAll() {
@@ -127,7 +132,7 @@ public class GatewayApiServiceImpl implements GatewayApiService {
         }
 
         //调用api添加钩子
-        //gatewayServiceDiscovery.addMethodDefinitionHook();
+        helperService.addMethodDefinitionHook(request.getRequestUri());
 
         return R.success(Boolean.TRUE);
     }
@@ -147,7 +152,7 @@ public class GatewayApiServiceImpl implements GatewayApiService {
         }
 
 
-        ConfigureApiDO configureApiDO = new ConfigureApiDO();
+        ConfigureApiDO configureApiDO = configureApiMapper.selectByPrimaryKey(request.getId());
         BeanUtils.copyProperties(request, configureApiDO);
         try {
             int update = configureApiMapper.updateByPrimaryKeySelective(configureApiDO);
@@ -161,7 +166,7 @@ public class GatewayApiServiceImpl implements GatewayApiService {
         }
 
         //调用api更新钩子
-        //gatewayServiceDiscovery.updateMethodDefinitionHook();
+        helperService.updateMethodDefinitionHook(configureApiDO.getRequestUri());
 
         return R.success(Boolean.TRUE);
     }
@@ -196,7 +201,7 @@ public class GatewayApiServiceImpl implements GatewayApiService {
         }
 
         //调用元数据修改钩子
-        //gatewayServiceDiscovery.updateMetadataMethodDefinitionHook();
+        helperService.updateMetadataMethodDefinitionHook(configureApiDO.getRequestUri());
 
         return R.success(Boolean.TRUE);
     }
@@ -231,7 +236,7 @@ public class GatewayApiServiceImpl implements GatewayApiService {
         }
 
         //调用元数据修改钩子
-        //gatewayServiceDiscovery.updateMetadataMethodDefinitionHook();
+        helperService.updateMetadataMethodDefinitionHook(configureApiDO.getRequestUri());
 
         return R.success(Boolean.TRUE);
     }
@@ -266,7 +271,7 @@ public class GatewayApiServiceImpl implements GatewayApiService {
         }
 
         //调用元数据修改钩子
-        //gatewayServiceDiscovery.updateMetadataMethodDefinitionHook();
+        helperService.updateMetadataMethodDefinitionHook(configureApiDO.getRequestUri());
 
         return R.success(Boolean.TRUE);
     }

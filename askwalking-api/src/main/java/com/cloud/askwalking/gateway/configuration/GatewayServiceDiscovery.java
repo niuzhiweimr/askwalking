@@ -4,9 +4,9 @@ import com.cloud.askwalking.core.AbstractGatewayServiceDiscovery;
 import com.cloud.askwalking.core.domain.ApiConfig;
 import com.cloud.askwalking.core.domain.FlowControlRule;
 import com.cloud.askwalking.core.domain.GatewayMethodDefinition;
-import com.cloud.askwalking.gateway.helper.HelperService;
 import com.cloud.askwalking.gateway.pipline.GatewayInvokePipeline;
 import com.cloud.askwalking.gateway.pipline.context.flowcontrol.FlowControlRuleHolder;
+import com.cloud.askwalking.gateway.repository.RepositoryService;
 import com.cloud.askwalking.repository.model.ConfigureApiDO;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
@@ -64,8 +64,8 @@ public class GatewayServiceDiscovery extends AbstractGatewayServiceDiscovery imp
     private void processGatewayServices() {
 
         try {
-            HelperService helperService = this.applicationContext.getBean(HelperService.class);
-            List<ConfigureApiDO> configureApiDOList = helperService.getApiAll();
+            RepositoryService repositoryService = this.applicationContext.getBean(RepositoryService.class);
+            List<ConfigureApiDO> configureApiDOList = repositoryService.getApiAll();
             if (CollectionUtils.isEmpty(configureApiDOList)) {
                 log.error("[GatewayServiceDiscovery]Gateway api Config Not Found");
             }
@@ -159,8 +159,8 @@ public class GatewayServiceDiscovery extends AbstractGatewayServiceDiscovery imp
 
         try {
 
-            HelperService helperService = this.applicationContext.getBean(HelperService.class);
-            ConfigureApiDO configureApiDo = helperService.getApiByUri(uri);
+            RepositoryService repositoryService = this.applicationContext.getBean(RepositoryService.class);
+            ConfigureApiDO configureApiDo = repositoryService.getApiByUri(uri);
             if (configureApiDo == null) {
                 log.warn("[GatewayServiceDiscovery]offlineMethodDefinitionHook Gateway api Config Not Found");
                 return;
@@ -182,8 +182,8 @@ public class GatewayServiceDiscovery extends AbstractGatewayServiceDiscovery imp
 
         try {
 
-            HelperService helperService = this.applicationContext.getBean(HelperService.class);
-            ConfigureApiDO configureApiDo = helperService.getApiByUri(uri);
+            RepositoryService repositoryService = this.applicationContext.getBean(RepositoryService.class);
+            ConfigureApiDO configureApiDo = repositoryService.getApiByUri(uri);
             if (configureApiDo == null) {
                 log.warn("[GatewayServiceDiscovery]updateMethodDefinitionHook Gateway api Config Not Found");
                 return;
@@ -210,8 +210,8 @@ public class GatewayServiceDiscovery extends AbstractGatewayServiceDiscovery imp
 
         try {
 
-            HelperService helperService = this.applicationContext.getBean(HelperService.class);
-            ConfigureApiDO configureApiDo = helperService.getApiByUri(uri);
+            RepositoryService repositoryService = this.applicationContext.getBean(RepositoryService.class);
+            ConfigureApiDO configureApiDo = repositoryService.getApiByUri(uri);
             if (configureApiDo == null) {
                 log.warn("[GatewayServiceDiscovery]addMethodDefinitionHook Gateway api Config Not Found");
                 return;

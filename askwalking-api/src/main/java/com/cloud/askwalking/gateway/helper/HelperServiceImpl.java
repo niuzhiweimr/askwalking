@@ -1,17 +1,10 @@
 package com.cloud.askwalking.gateway.helper;
 
-import com.cloud.askwalking.repository.dao.ConfigureApiMapper;
-import com.cloud.askwalking.repository.dao.SaasConfigMapper;
-import com.cloud.askwalking.repository.dao.SaasResourceMapper;
-import com.cloud.askwalking.repository.model.*;
+import com.cloud.askwalking.core.HelperService;
+import com.cloud.askwalking.gateway.configuration.GatewayServiceDiscovery;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.dubbo.config.annotation.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author niuzhiwei
@@ -20,97 +13,30 @@ import java.util.List;
 @Service
 public class HelperServiceImpl implements HelperService {
 
-    @Resource
-    private ConfigureApiMapper configureApiMapper;
-
-    @Resource
-    private SaasConfigMapper saasConfigMapper;
-
-    @Resource
-    private SaasResourceMapper saasResourceMapper;
+    @Autowired
+    private GatewayServiceDiscovery gatewayServiceDiscovery;
 
     @Override
-    public List<ConfigureApiDO> getApiAll() {
-
-        List<ConfigureApiDO> configureApiDOS;
-        try {
-            ConfigureApiExample configureApiExample = new ConfigureApiExample();
-            configureApiExample.createCriteria().andDeleteFlagEqualTo(Boolean.FALSE);
-            configureApiDOS = configureApiMapper.selectByExample(configureApiExample);
-        } catch (Exception e) {
-            log.error("[GatewayApiServiceImpl] Query API configuration exception：", e);
-            throw new RuntimeException(e);
+    public void addMethodDefinitionHook(String uri) {
+        if (log.isDebugEnabled()) {
+            log.debug("HelperService#addMethodDefinitionHook({})", uri);
         }
-
-        if (CollectionUtils.isEmpty(configureApiDOS)) {
-            return new ArrayList<>(0);
-        }
-
-        return configureApiDOS;
+        gatewayServiceDiscovery.addMethodDefinitionHook(uri);
     }
 
     @Override
-    public ConfigureApiDO getApiByUri(String uri) {
-
-        List<ConfigureApiDO> configureApiDOS;
-        try {
-            ConfigureApiExample configureApiExample = new ConfigureApiExample();
-            configureApiExample.createCriteria()
-                    .andRequestUriEqualTo(uri)
-                    .andDeleteFlagEqualTo(Boolean.FALSE);
-            configureApiDOS = configureApiMapper.selectByExample(configureApiExample);
-        } catch (Exception e) {
-            log.error("[GatewayApiServiceImpl] Query API configuration exception：", e);
-            throw new RuntimeException(e);
+    public void updateMethodDefinitionHook(String uri) {
+        if (log.isDebugEnabled()) {
+            log.debug("HelperService#updateMethodDefinitionHook({})", uri);
         }
-
-        if (CollectionUtils.isEmpty(configureApiDOS)) {
-            return null;
-        }
-
-        return configureApiDOS.get(0);
+        gatewayServiceDiscovery.updateMethodDefinitionHook(uri);
     }
-
 
     @Override
-    public SaasConfigDO getSaasByOpenId(String openId) {
-
-        if (StringUtils.isEmpty(openId)) {
-            return null;
+    public void updateMetadataMethodDefinitionHook(String uri) {
+        if (log.isDebugEnabled()) {
+            log.debug("HelperService#updateMetadataMethodDefinitionHook({})", uri);
         }
-
-        SaasConfigExample saasConfigExample = new SaasConfigExample();
-        saasConfigExample.createCriteria().andOpenIdEqualTo(openId)
-                .andStatusEqualTo((byte) 1)
-                .andDeleteFlagEqualTo(Boolean.FALSE);
-        List<SaasConfigDO> saasConfigDOList = saasConfigMapper.selectByExample(saasConfigExample);
-        if (CollectionUtils.isEmpty(saasConfigDOList)) {
-            return null;
-        }
-
-        return saasConfigDOList.get(0);
+        gatewayServiceDiscovery.updateMetadataMethodDefinitionHook(uri);
     }
-
-
-    @Override
-    public SaasResourceDO getSaasResource(String openId, String requestUri) {
-
-        if (StringUtils.isEmpty(openId) || StringUtils.isEmpty(requestUri)) {
-            return null;
-        }
-
-        SaasResourceExample saasResourceExample = new SaasResourceExample();
-        saasResourceExample.createCriteria()
-                .andOpenIdEqualTo(openId)
-                .andRequestUriEqualTo(requestUri)
-                .andStatusEqualTo((byte) 1)
-                .andDeleteFlagEqualTo(Boolean.FALSE);
-        List<SaasResourceDO> saasResourceDOList = saasResourceMapper.selectByExample(saasResourceExample);
-        if (CollectionUtils.isEmpty(saasResourceDOList)) {
-            return null;
-        }
-
-        return saasResourceDOList.get(0);
-    }
-
 }
