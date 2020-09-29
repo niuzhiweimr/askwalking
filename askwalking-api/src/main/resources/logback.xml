@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+
+    <property name="locallog.dir" value="./askwalking/askwalking-api"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <Pattern>%boldYellow(%d{yyyy-MM-dd HH:mm:ss.SSS}) %boldYellow([%tid]) %boldMagenta([%thread])  %boldMagenta(%-5level) %boldGreen([class:%class | method:%method | line:%line]) %boldCyan(logInfo==>) %msg%n</Pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${locallog.dir}/askwalking-api.log</File>
+        <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+            <Pattern>%boldYellow(%d{yyyy-MM-dd HH:mm:ss.SSS}) %boldYellow([%tid]) %boldMagenta([%thread])  %boldMagenta(%-5level) %boldGreen([class:%class | method:%method | line:%line]) %boldCyan(logInfo==>) %msg%n</Pattern>
+        </layout>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${locallog.dir}/askwalking-api.%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <!--打印SQL-->
+    <!-- <logger name="com.sinoiov.etc.gateway.dao" level="TRACE"/>-->
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="file"/>
+    </root>
+</configuration>

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : masget-test
+ Source Server         : askwalking
  Source Server Type    : MySQL
  Source Server Version : 50729
- Source Host           : 192.168.33.192:3306
- Source Schema         : gateway
+ Source Host           : 47.106.178.200:55663
+ Source Schema         : askwalking
 
  Target Server Type    : MySQL
  Target Server Version : 50729
  File Encoding         : 65001
 
- Date: 04/07/2020 12:13:49
+ Date: 13/09/2020 14:32:36
 */
 
 SET NAMES utf8mb4;
@@ -24,7 +24,9 @@ DROP TABLE IF EXISTS `gw_configure_api`;
 CREATE TABLE `gw_configure_api` (
   `id` varchar(32) NOT NULL COMMENT '主键',
   `application_name` varchar(255) NOT NULL COMMENT '应用名称',
-  `api_type` varchar(10) NOT NULL COMMENT '可选：API:(外部接口),ADMIN:(管理后台接口),SAAS：(开放平台接口)',
+  `protocol` varchar(8) DEFAULT NULL COMMENT '协议：RPC或FEIGN',
+  `content_type` varchar(128) DEFAULT 'application/json' COMMENT '内容类型，默认：application/json',
+  `api_type` varchar(10) NOT NULL COMMENT '可选：API:(外部接口)和ADMIN:(管理后台接口)',
   `request_uri` varchar(100) NOT NULL COMMENT '通过URI映射不同的dubbo service此不可重复',
   `request_method` varchar(10) NOT NULL DEFAULT 'GET' COMMENT '验证是否是正常请求并通过不同请求获取参数',
   `api_interface` varchar(100) NOT NULL COMMENT 'service类地址:com.awservice.openapi.service.TestService',

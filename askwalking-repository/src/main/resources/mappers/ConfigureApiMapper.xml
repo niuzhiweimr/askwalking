@@ -1,0 +1,825 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloud.askwalking.repository.dao.ConfigureApiMapper" >
+  <resultMap id="BaseResultMap" type="com.cloud.askwalking.repository.model.ConfigureApiDO" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="application_name" property="applicationName" jdbcType="VARCHAR" />
+    <result column="protocol" property="protocol" jdbcType="VARCHAR" />
+    <result column="content_type" property="contentType" jdbcType="VARCHAR" />
+    <result column="api_type" property="apiType" jdbcType="VARCHAR" />
+    <result column="request_uri" property="requestUri" jdbcType="VARCHAR" />
+    <result column="request_method" property="requestMethod" jdbcType="VARCHAR" />
+    <result column="api_interface" property="apiInterface" jdbcType="VARCHAR" />
+    <result column="api_version" property="apiVersion" jdbcType="VARCHAR" />
+    <result column="api_request_class" property="apiRequestClass" jdbcType="VARCHAR" />
+    <result column="api_method" property="apiMethod" jdbcType="VARCHAR" />
+    <result column="api_group" property="apiGroup" jdbcType="VARCHAR" />
+    <result column="api_name" property="apiName" jdbcType="VARCHAR" />
+    <result column="api_async" property="apiAsync" jdbcType="BIT" />
+    <result column="api_reload" property="apiReload" jdbcType="BIT" />
+    <result column="mock_response" property="mockResponse" jdbcType="VARCHAR" />
+    <result column="system_guard" property="systemGuard" jdbcType="INTEGER" />
+    <result column="flow_control_rule_type" property="flowControlRuleType" jdbcType="INTEGER" />
+    <result column="qps" property="qps" jdbcType="REAL" />
+    <result column="avg_rt" property="avgRt" jdbcType="BIGINT" />
+    <result column="max_thread" property="maxThread" jdbcType="BIGINT" />
+    <result column="sign_check" property="signCheck" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="BIT" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, application_name, protocol, content_type, api_type, request_uri, request_method,
+    api_interface, api_version, api_request_class, api_method, api_group, api_name, api_async,
+    api_reload, mock_response, system_guard, flow_control_rule_type, qps, avg_rt, max_thread,
+    sign_check, status, delete_flag, operator, update_time, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.trafficbu.etc.gateway.manager.model.ConfigureApiExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from gw_configure_api
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from gw_configure_api
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from gw_configure_api
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.trafficbu.etc.gateway.manager.model.ConfigureApiExample" >
+    delete from gw_configure_api
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.trafficbu.etc.gateway.manager.model.ConfigureApiDO" >
+    insert into gw_configure_api (id, application_name, protocol,
+      content_type, api_type, request_uri,
+      request_method, api_interface, api_version,
+      api_request_class, api_method, api_group,
+      api_name, api_async, api_reload,
+      mock_response, system_guard, flow_control_rule_type,
+      qps, avg_rt, max_thread, sign_check,
+      status, delete_flag, operator,
+      update_time, create_time)
+    values (#{id,jdbcType=VARCHAR}, #{applicationName,jdbcType=VARCHAR}, #{protocol,jdbcType=VARCHAR},
+      #{contentType,jdbcType=VARCHAR}, #{apiType,jdbcType=VARCHAR}, #{requestUri,jdbcType=VARCHAR},
+      #{requestMethod,jdbcType=VARCHAR}, #{apiInterface,jdbcType=VARCHAR}, #{apiVersion,jdbcType=VARCHAR},
+      #{apiRequestClass,jdbcType=VARCHAR}, #{apiMethod,jdbcType=VARCHAR}, #{apiGroup,jdbcType=VARCHAR},
+      #{apiName,jdbcType=VARCHAR}, #{apiAsync,jdbcType=BIT}, #{apiReload,jdbcType=BIT},
+      #{mockResponse,jdbcType=VARCHAR}, #{systemGuard,jdbcType=INTEGER}, #{flowControlRuleType,jdbcType=INTEGER},
+      #{qps,jdbcType=REAL}, #{avgRt,jdbcType=BIGINT}, #{maxThread,jdbcType=BIGINT}, #{signCheck,jdbcType=INTEGER},
+      #{status,jdbcType=INTEGER}, #{deleteFlag,jdbcType=BIT}, #{operator,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.trafficbu.etc.gateway.manager.model.ConfigureApiDO" >
+    insert into gw_configure_api
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="applicationName != null" >
+        application_name,
+      </if>
+      <if test="protocol != null" >
+        protocol,
+      </if>
+      <if test="contentType != null" >
+        content_type,
+      </if>
+      <if test="apiType != null" >
+        api_type,
+      </if>
+      <if test="requestUri != null" >
+        request_uri,
+      </if>
+      <if test="requestMethod != null" >
+        request_method,
+      </if>
+      <if test="apiInterface != null" >
+        api_interface,
+      </if>
+      <if test="apiVersion != null" >
+        api_version,
+      </if>
+      <if test="apiRequestClass != null" >
+        api_request_class,
+      </if>
+      <if test="apiMethod != null" >
+        api_method,
+      </if>
+      <if test="apiGroup != null" >
+        api_group,
+      </if>
+      <if test="apiName != null" >
+        api_name,
+      </if>
+      <if test="apiAsync != null" >
+        api_async,
+      </if>
+      <if test="apiReload != null" >
+        api_reload,
+      </if>
+      <if test="mockResponse != null" >
+        mock_response,
+      </if>
+      <if test="systemGuard != null" >
+        system_guard,
+      </if>
+      <if test="flowControlRuleType != null" >
+        flow_control_rule_type,
+      </if>
+      <if test="qps != null" >
+        qps,
+      </if>
+      <if test="avgRt != null" >
+        avg_rt,
+      </if>
+      <if test="maxThread != null" >
+        max_thread,
+      </if>
+      <if test="signCheck != null" >
+        sign_check,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationName != null" >
+        #{applicationName,jdbcType=VARCHAR},
+      </if>
+      <if test="protocol != null" >
+        #{protocol,jdbcType=VARCHAR},
+      </if>
+      <if test="contentType != null" >
+        #{contentType,jdbcType=VARCHAR},
+      </if>
+      <if test="apiType != null" >
+        #{apiType,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUri != null" >
+        #{requestUri,jdbcType=VARCHAR},
+      </if>
+      <if test="requestMethod != null" >
+        #{requestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="apiInterface != null" >
+        #{apiInterface,jdbcType=VARCHAR},
+      </if>
+      <if test="apiVersion != null" >
+        #{apiVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="apiRequestClass != null" >
+        #{apiRequestClass,jdbcType=VARCHAR},
+      </if>
+      <if test="apiMethod != null" >
+        #{apiMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="apiGroup != null" >
+        #{apiGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="apiName != null" >
+        #{apiName,jdbcType=VARCHAR},
+      </if>
+      <if test="apiAsync != null" >
+        #{apiAsync,jdbcType=BIT},
+      </if>
+      <if test="apiReload != null" >
+        #{apiReload,jdbcType=BIT},
+      </if>
+      <if test="mockResponse != null" >
+        #{mockResponse,jdbcType=VARCHAR},
+      </if>
+      <if test="systemGuard != null" >
+        #{systemGuard,jdbcType=INTEGER},
+      </if>
+      <if test="flowControlRuleType != null" >
+        #{flowControlRuleType,jdbcType=INTEGER},
+      </if>
+      <if test="qps != null" >
+        #{qps,jdbcType=REAL},
+      </if>
+      <if test="avgRt != null" >
+        #{avgRt,jdbcType=BIGINT},
+      </if>
+      <if test="maxThread != null" >
+        #{maxThread,jdbcType=BIGINT},
+      </if>
+      <if test="signCheck != null" >
+        #{signCheck,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=BIT},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.trafficbu.etc.gateway.manager.model.ConfigureApiExample" resultType="java.lang.Integer" >
+    select count(*) from gw_configure_api
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update gw_configure_api
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicationName != null" >
+        application_name = #{record.applicationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.protocol != null" >
+        protocol = #{record.protocol,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contentType != null" >
+        content_type = #{record.contentType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apiType != null" >
+        api_type = #{record.apiType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestUri != null" >
+        request_uri = #{record.requestUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestMethod != null" >
+        request_method = #{record.requestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apiInterface != null" >
+        api_interface = #{record.apiInterface,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apiVersion != null" >
+        api_version = #{record.apiVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apiRequestClass != null" >
+        api_request_class = #{record.apiRequestClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apiMethod != null" >
+        api_method = #{record.apiMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apiGroup != null" >
+        api_group = #{record.apiGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apiName != null" >
+        api_name = #{record.apiName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apiAsync != null" >
+        api_async = #{record.apiAsync,jdbcType=BIT},
+      </if>
+      <if test="record.apiReload != null" >
+        api_reload = #{record.apiReload,jdbcType=BIT},
+      </if>
+      <if test="record.mockResponse != null" >
+        mock_response = #{record.mockResponse,jdbcType=VARCHAR},
+      </if>
+      <if test="record.systemGuard != null" >
+        system_guard = #{record.systemGuard,jdbcType=INTEGER},
+      </if>
+      <if test="record.flowControlRuleType != null" >
+        flow_control_rule_type = #{record.flowControlRuleType,jdbcType=INTEGER},
+      </if>
+      <if test="record.qps != null" >
+        qps = #{record.qps,jdbcType=REAL},
+      </if>
+      <if test="record.avgRt != null" >
+        avg_rt = #{record.avgRt,jdbcType=BIGINT},
+      </if>
+      <if test="record.maxThread != null" >
+        max_thread = #{record.maxThread,jdbcType=BIGINT},
+      </if>
+      <if test="record.signCheck != null" >
+        sign_check = #{record.signCheck,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=BIT},
+      </if>
+      <if test="record.operator != null" >
+        operator = #{record.operator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update gw_configure_api
+    set id = #{record.id,jdbcType=VARCHAR},
+    application_name = #{record.applicationName,jdbcType=VARCHAR},
+    protocol = #{record.protocol,jdbcType=VARCHAR},
+    content_type = #{record.contentType,jdbcType=VARCHAR},
+    api_type = #{record.apiType,jdbcType=VARCHAR},
+    request_uri = #{record.requestUri,jdbcType=VARCHAR},
+    request_method = #{record.requestMethod,jdbcType=VARCHAR},
+    api_interface = #{record.apiInterface,jdbcType=VARCHAR},
+    api_version = #{record.apiVersion,jdbcType=VARCHAR},
+    api_request_class = #{record.apiRequestClass,jdbcType=VARCHAR},
+    api_method = #{record.apiMethod,jdbcType=VARCHAR},
+    api_group = #{record.apiGroup,jdbcType=VARCHAR},
+    api_name = #{record.apiName,jdbcType=VARCHAR},
+    api_async = #{record.apiAsync,jdbcType=BIT},
+    api_reload = #{record.apiReload,jdbcType=BIT},
+    mock_response = #{record.mockResponse,jdbcType=VARCHAR},
+    system_guard = #{record.systemGuard,jdbcType=INTEGER},
+    flow_control_rule_type = #{record.flowControlRuleType,jdbcType=INTEGER},
+    qps = #{record.qps,jdbcType=REAL},
+    avg_rt = #{record.avgRt,jdbcType=BIGINT},
+    max_thread = #{record.maxThread,jdbcType=BIGINT},
+    sign_check = #{record.signCheck,jdbcType=INTEGER},
+    status = #{record.status,jdbcType=INTEGER},
+    delete_flag = #{record.deleteFlag,jdbcType=BIT},
+    operator = #{record.operator,jdbcType=VARCHAR},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.trafficbu.etc.gateway.manager.model.ConfigureApiDO" >
+    update gw_configure_api
+    <set >
+      <if test="applicationName != null" >
+        application_name = #{applicationName,jdbcType=VARCHAR},
+      </if>
+      <if test="protocol != null" >
+        protocol = #{protocol,jdbcType=VARCHAR},
+      </if>
+      <if test="contentType != null" >
+        content_type = #{contentType,jdbcType=VARCHAR},
+      </if>
+      <if test="apiType != null" >
+        api_type = #{apiType,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUri != null" >
+        request_uri = #{requestUri,jdbcType=VARCHAR},
+      </if>
+      <if test="requestMethod != null" >
+        request_method = #{requestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="apiInterface != null" >
+        api_interface = #{apiInterface,jdbcType=VARCHAR},
+      </if>
+      <if test="apiVersion != null" >
+        api_version = #{apiVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="apiRequestClass != null" >
+        api_request_class = #{apiRequestClass,jdbcType=VARCHAR},
+      </if>
+      <if test="apiMethod != null" >
+        api_method = #{apiMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="apiGroup != null" >
+        api_group = #{apiGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="apiName != null" >
+        api_name = #{apiName,jdbcType=VARCHAR},
+      </if>
+      <if test="apiAsync != null" >
+        api_async = #{apiAsync,jdbcType=BIT},
+      </if>
+      <if test="apiReload != null" >
+        api_reload = #{apiReload,jdbcType=BIT},
+      </if>
+      <if test="mockResponse != null" >
+        mock_response = #{mockResponse,jdbcType=VARCHAR},
+      </if>
+      <if test="systemGuard != null" >
+        system_guard = #{systemGuard,jdbcType=INTEGER},
+      </if>
+      <if test="flowControlRuleType != null" >
+        flow_control_rule_type = #{flowControlRuleType,jdbcType=INTEGER},
+      </if>
+      <if test="qps != null" >
+        qps = #{qps,jdbcType=REAL},
+      </if>
+      <if test="avgRt != null" >
+        avg_rt = #{avgRt,jdbcType=BIGINT},
+      </if>
+      <if test="maxThread != null" >
+        max_thread = #{maxThread,jdbcType=BIGINT},
+      </if>
+      <if test="signCheck != null" >
+        sign_check = #{signCheck,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=BIT},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.trafficbu.etc.gateway.manager.model.ConfigureApiDO" >
+    update gw_configure_api
+    set application_name = #{applicationName,jdbcType=VARCHAR},
+      protocol = #{protocol,jdbcType=VARCHAR},
+      content_type = #{contentType,jdbcType=VARCHAR},
+      api_type = #{apiType,jdbcType=VARCHAR},
+      request_uri = #{requestUri,jdbcType=VARCHAR},
+      request_method = #{requestMethod,jdbcType=VARCHAR},
+      api_interface = #{apiInterface,jdbcType=VARCHAR},
+      api_version = #{apiVersion,jdbcType=VARCHAR},
+      api_request_class = #{apiRequestClass,jdbcType=VARCHAR},
+      api_method = #{apiMethod,jdbcType=VARCHAR},
+      api_group = #{apiGroup,jdbcType=VARCHAR},
+      api_name = #{apiName,jdbcType=VARCHAR},
+      api_async = #{apiAsync,jdbcType=BIT},
+      api_reload = #{apiReload,jdbcType=BIT},
+      mock_response = #{mockResponse,jdbcType=VARCHAR},
+      system_guard = #{systemGuard,jdbcType=INTEGER},
+      flow_control_rule_type = #{flowControlRuleType,jdbcType=INTEGER},
+      qps = #{qps,jdbcType=REAL},
+      avg_rt = #{avgRt,jdbcType=BIGINT},
+      max_thread = #{maxThread,jdbcType=BIGINT},
+      sign_check = #{signCheck,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      delete_flag = #{deleteFlag,jdbcType=BIT},
+      operator = #{operator,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <insert id="insertBatchSelective" parameterType="java.util.List" >
+    <foreach collection="list" index="index" item="item" separator=";" >
+      insert into gw_configure_api
+      <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="item.id!=null" >
+          id,
+        </if>
+        <if test="item.applicationName!=null" >
+          application_name,
+        </if>
+        <if test="item.protocol!=null" >
+          protocol,
+        </if>
+        <if test="item.contentType!=null" >
+          content_type,
+        </if>
+        <if test="item.apiType!=null" >
+          api_type,
+        </if>
+        <if test="item.requestUri!=null" >
+          request_uri,
+        </if>
+        <if test="item.requestMethod!=null" >
+          request_method,
+        </if>
+        <if test="item.apiInterface!=null" >
+          api_interface,
+        </if>
+        <if test="item.apiVersion!=null" >
+          api_version,
+        </if>
+        <if test="item.apiRequestClass!=null" >
+          api_request_class,
+        </if>
+        <if test="item.apiMethod!=null" >
+          api_method,
+        </if>
+        <if test="item.apiGroup!=null" >
+          api_group,
+        </if>
+        <if test="item.apiName!=null" >
+          api_name,
+        </if>
+        <if test="item.apiAsync!=null" >
+          api_async,
+        </if>
+        <if test="item.apiReload!=null" >
+          api_reload,
+        </if>
+        <if test="item.mockResponse!=null" >
+          mock_response,
+        </if>
+        <if test="item.systemGuard!=null" >
+          system_guard,
+        </if>
+        <if test="item.flowControlRuleType!=null" >
+          flow_control_rule_type,
+        </if>
+        <if test="item.qps!=null" >
+          qps,
+        </if>
+        <if test="item.avgRt!=null" >
+          avg_rt,
+        </if>
+        <if test="item.maxThread!=null" >
+          max_thread,
+        </if>
+        <if test="item.signCheck!=null" >
+          sign_check,
+        </if>
+        <if test="item.status!=null" >
+          status,
+        </if>
+        <if test="item.deleteFlag!=null" >
+          delete_flag,
+        </if>
+        <if test="item.operator!=null" >
+          operator,
+        </if>
+        <if test="item.updateTime!=null" >
+          update_time,
+        </if>
+        <if test="item.createTime!=null" >
+          create_time,
+        </if>
+      </trim>
+      values
+      <trim prefix=" (" suffix=")" suffixOverrides="," >
+        <if test="item.id!=null" >
+          #{item.id,jdbcType=VARCHAR},
+        </if>
+        <if test="item.applicationName!=null" >
+          #{item.applicationName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.protocol!=null" >
+          #{item.protocol,jdbcType=VARCHAR},
+        </if>
+        <if test="item.contentType!=null" >
+          #{item.contentType,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiType!=null" >
+          #{item.apiType,jdbcType=VARCHAR},
+        </if>
+        <if test="item.requestUri!=null" >
+          #{item.requestUri,jdbcType=VARCHAR},
+        </if>
+        <if test="item.requestMethod!=null" >
+          #{item.requestMethod,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiInterface!=null" >
+          #{item.apiInterface,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiVersion!=null" >
+          #{item.apiVersion,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiRequestClass!=null" >
+          #{item.apiRequestClass,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiMethod!=null" >
+          #{item.apiMethod,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiGroup!=null" >
+          #{item.apiGroup,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiName!=null" >
+          #{item.apiName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiAsync!=null" >
+          #{item.apiAsync,jdbcType=BIT},
+        </if>
+        <if test="item.apiReload!=null" >
+          #{item.apiReload,jdbcType=BIT},
+        </if>
+        <if test="item.mockResponse!=null" >
+          #{item.mockResponse,jdbcType=VARCHAR},
+        </if>
+        <if test="item.systemGuard!=null" >
+          #{item.systemGuard,jdbcType=INTEGER},
+        </if>
+        <if test="item.flowControlRuleType!=null" >
+          #{item.flowControlRuleType,jdbcType=INTEGER},
+        </if>
+        <if test="item.qps!=null" >
+          #{item.qps,jdbcType=REAL},
+        </if>
+        <if test="item.avgRt!=null" >
+          #{item.avgRt,jdbcType=BIGINT},
+        </if>
+        <if test="item.maxThread!=null" >
+          #{item.maxThread,jdbcType=BIGINT},
+        </if>
+        <if test="item.signCheck!=null" >
+          #{item.signCheck,jdbcType=INTEGER},
+        </if>
+        <if test="item.status!=null" >
+          #{item.status,jdbcType=INTEGER},
+        </if>
+        <if test="item.deleteFlag!=null" >
+          #{item.deleteFlag,jdbcType=BIT},
+        </if>
+        <if test="item.operator!=null" >
+          #{item.operator,jdbcType=VARCHAR},
+        </if>
+        <if test="item.updateTime!=null" >
+          #{item.updateTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.createTime!=null" >
+          #{item.createTime,jdbcType=TIMESTAMP},
+        </if>
+      </trim>
+    </foreach>
+  </insert>
+  <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List" >
+    <foreach collection="list" item="item" index="index" separator=";" >
+      update gw_configure_api
+      <set >
+        <if test="item.applicationName!=null" >
+          application_name=#{item.applicationName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.protocol!=null" >
+          protocol=#{item.protocol,jdbcType=VARCHAR},
+        </if>
+        <if test="item.contentType!=null" >
+          content_type=#{item.contentType,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiType!=null" >
+          api_type=#{item.apiType,jdbcType=VARCHAR},
+        </if>
+        <if test="item.requestUri!=null" >
+          request_uri=#{item.requestUri,jdbcType=VARCHAR},
+        </if>
+        <if test="item.requestMethod!=null" >
+          request_method=#{item.requestMethod,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiInterface!=null" >
+          api_interface=#{item.apiInterface,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiVersion!=null" >
+          api_version=#{item.apiVersion,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiRequestClass!=null" >
+          api_request_class=#{item.apiRequestClass,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiMethod!=null" >
+          api_method=#{item.apiMethod,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiGroup!=null" >
+          api_group=#{item.apiGroup,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiName!=null" >
+          api_name=#{item.apiName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.apiAsync!=null" >
+          api_async=#{item.apiAsync,jdbcType=BIT},
+        </if>
+        <if test="item.apiReload!=null" >
+          api_reload=#{item.apiReload,jdbcType=BIT},
+        </if>
+        <if test="item.mockResponse!=null" >
+          mock_response=#{item.mockResponse,jdbcType=VARCHAR},
+        </if>
+        <if test="item.systemGuard!=null" >
+          system_guard=#{item.systemGuard,jdbcType=INTEGER},
+        </if>
+        <if test="item.flowControlRuleType!=null" >
+          flow_control_rule_type=#{item.flowControlRuleType,jdbcType=INTEGER},
+        </if>
+        <if test="item.qps!=null" >
+          qps=#{item.qps,jdbcType=REAL},
+        </if>
+        <if test="item.avgRt!=null" >
+          avg_rt=#{item.avgRt,jdbcType=BIGINT},
+        </if>
+        <if test="item.maxThread!=null" >
+          max_thread=#{item.maxThread,jdbcType=BIGINT},
+        </if>
+        <if test="item.signCheck!=null" >
+          sign_check=#{item.signCheck,jdbcType=INTEGER},
+        </if>
+        <if test="item.status!=null" >
+          status=#{item.status,jdbcType=INTEGER},
+        </if>
+        <if test="item.deleteFlag!=null" >
+          delete_flag=#{item.deleteFlag,jdbcType=BIT},
+        </if>
+        <if test="item.operator!=null" >
+          operator=#{item.operator,jdbcType=VARCHAR},
+        </if>
+        <if test="item.updateTime!=null" >
+          update_time=#{item.updateTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.createTime!=null" >
+          create_time=#{item.createTime,jdbcType=TIMESTAMP},
+        </if>
+      </set>
+      where
+      id = #{item.id,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+</mapper>

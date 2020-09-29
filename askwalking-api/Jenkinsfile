@@ -1,0 +1,24 @@
+pipeline {
+  agent {
+    docker {
+      image 'maven:3-alpine'
+      args '-v /root/.m2:/root/.m2'
+    }
+
+  }
+  stages {
+    stage('build') {
+      steps {
+        sh 'mvn clean install deploy -e-U'
+      }
+    }
+
+    stage('artifacts') {
+      steps {
+        archiveArtifacts 'target/*.jar'
+        fingerprint 'target/*.jar'
+      }
+    }
+
+  }
+}

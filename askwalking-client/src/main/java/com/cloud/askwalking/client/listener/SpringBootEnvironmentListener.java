@@ -1,6 +1,6 @@
 package com.cloud.askwalking.client.listener;
 
-import com.cloud.askwalking.client.domain.SystemManager;
+import com.cloud.askwalking.common.domain.SystemManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationPreparedEvent;
 import org.springframework.context.ApplicationListener;

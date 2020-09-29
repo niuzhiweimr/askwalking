@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <classPathEntry
+            location="/Users/niuzhiwei/.m2/repository/mysql/mysql-connector-java/8.0.11/mysql-connector-java-8.0.11.jar"/>
+
+    <context id="context1">
+        <!-- 生成的pojo，将implements Serializable-->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="com.wakenlion.pagination.plugin.PaginationPlugin"/>
+        <plugin type="com.wakenlion.pagination.plugin.BatchInsertPlugin"/>
+        <plugin type="com.wakenlion.pagination.plugin.BatchUpdatePlugin"/>
+        <commentGenerator type="com.wakenlion.pagination.plugin.BDTCommentGenerator">
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="false"/>
+        </commentGenerator>
+        <jdbcConnection
+                connectionURL="jdbc:mysql://218.201.47.63:3306/etc_oss"
+                driverClass="com.mysql.cj.jdbc.Driver" password="act123" userId="act">
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+        <!--<javaModelGenerator targetPackage="com.xhgx.web.base.common.model" targetProject="/Users/niuzhiwei/Documents/nzw-code/sfst-repository/src/main/java" >-->
+        <!--<property name="trimStrings" value="true"/>-->
+        <!--</javaModelGenerator>-->
+        <!--<sqlMapGenerator targetPackage="common" targetProject="/Users/niuzhiwei/Documents/nzw-code/sfst-repository/src/main/resources/com/xhgx/map" />-->
+        <!--<javaClientGenerator targetPackage="com.xhgx.web.base.common.dao" targetProject="/Users/niuzhiwei/Documents/nzw-code/sfst-repository/src/main/java" type="XMLMAPPER" />-->
+
+        <javaModelGenerator targetPackage="com.trafficbu.oss.model"
+                            targetProject="/Users/niuzhiwei/Documents/masget-code/trafficbu-oss/trafficbu-oss-repository/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--生成SQLMAP文件 -->
+        <sqlMapGenerator targetPackage="mappers"
+                         targetProject="/Users/niuzhiwei/Documents/masget-code/trafficbu-oss/trafficbu-oss-repository/src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!--生成Dao文件 可以配置 type="XMLMAPPER"生成xml的dao实现-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.trafficbu.oss.dao"
+                             targetProject="/Users/niuzhiwei/Documents/masget-code/trafficbu-oss/trafficbu-oss-repository/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--<table schema="sfst-web" tableName="tb_budget_detail" domainObjectName="BudgetDetail"/>-->
+        <!--<table schema="sfst-web" tableName="tb_budge_relation" domainObjectName="BudgetRelation"/>-->
+        <!--<table schema="sfst-web" tableName="tb_sub_entry_detail" domainObjectName="SubEntryDetail"/>-->
+        <!--<table schema="sfst-web" tableName="tb_labour_detail" domainObjectName="LabourDetail"/>-->
+        <!--<table schema="sfst-web" tableName="tb_materiel_detail" domainObjectName="MaterielDetail"/>-->
+        <!--<table schema="sfst-web" tableName="tb_machine_detail" domainObjectName="MachineDetail"/>-->
+        <!--<table schema="sfst-web" tableName="tb_bid_detail" domainObjectName="BidDetail"/>-->
+        <!--<table schema="sfst-web" tableName="tb_compare_control_price" domainObjectName="CompareControlPrice"/>-->
+        <!--<table schema="sfst-web" tableName="tb_compare_control_price_detail" domainObjectName="CompareControlPriceDetail"/>-->
+        <!--<table schema="sfst-web" tableName="tb_compare_detail" domainObjectName="CompareDetail"/>-->
+        <!--<table schema="sfst-web" tableName="tb_compare_file" domainObjectName="CompareFile"/>-->
+        <!--<table schema="sfst-web" tableName="tb_contract" domainObjectName="Contract"/>-->
+        <!--<table schema="sfst-web" tableName="tb_compare_plan" domainObjectName="ComparePlan"/>-->
+        <!--<table schema="sfst-web" tableName="tb_compare_result" domainObjectName="CompareResult"/>-->
+        <table schema="etc_oss" tableName="t_upload_file_log" domainObjectName="UploadFileLog">
+            <ignoreColumn column="update_time"/>
+        </table>
+
+        <!--        <table schema="gateway" tableName="gw_user" domainObjectName="User"/>-->
+        <!--<table schema="sfst-web" tableName="tb_entrust_detail" domainObjectName="EntrusDetail"/>-->
+        <!--<table schema="sfst-web" tableName="tb_other_detail" domainObjectName="OtherDetail"/>-->
+    </context>
+</generatorConfiguration>
