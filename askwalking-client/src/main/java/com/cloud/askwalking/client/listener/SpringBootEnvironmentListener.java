@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * SpringBoot 环境监听
  *
- * @author SHOUSHEN LUAN
+ * @author niuzhiwei
  */
 @Slf4j
 public class SpringBootEnvironmentListener implements ApplicationListener<ApplicationPreparedEvent> {
