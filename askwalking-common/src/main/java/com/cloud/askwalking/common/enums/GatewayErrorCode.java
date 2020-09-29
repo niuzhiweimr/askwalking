@@ -45,7 +45,7 @@ public enum GatewayErrorCode implements StatusDefinition {
     SAAS_RESOURCE_API_IS_NULL(2044, "资源URI无效"),
 
     /**
-     * SAAS相关 2051 ~ 2090
+     * JWT相关 2051 ~ 2090
      */
     JWT_AUTHORIZATION_ERROR(2051, "jwt鉴权失败"),
     JWT_TOKEN_HEADER_IS_NULL(2052, "jwt token header空"),
