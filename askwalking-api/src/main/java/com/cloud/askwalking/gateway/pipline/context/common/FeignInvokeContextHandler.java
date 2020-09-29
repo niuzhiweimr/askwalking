@@ -71,8 +71,8 @@ public class FeignInvokeContextHandler extends AbstractGatewayContextHandler {
         Response execute = feignClient.execute(request, gatewayInvokeContext.getFeignRequestOptions());
 
         byte[] bytes = InputStreamUtil.readInputStream(execute.body().asInputStream());
-        R response = new Gson().fromJson(new String(bytes), R.class);
-        gatewayInvokeContext.setBaseResponse(response);
+        R r = new Gson().fromJson(new String(bytes), R.class);
+        gatewayInvokeContext.setBaseResponse(r);
     }
 
     /**

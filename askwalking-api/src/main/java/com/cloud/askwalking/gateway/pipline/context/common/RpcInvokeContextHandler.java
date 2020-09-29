@@ -66,8 +66,8 @@ public class RpcInvokeContextHandler extends AbstractGatewayContextHandler {
         Object result = genericService.$invoke(gatewayInvokeContext.getApiMethod(),
                 new String[]{gatewayInvokeContext.getApiRequestClass()}, new Object[]{gatewayInvokeContext.getServiceParam()});
         String resultJson = JSONObject.toJSONString(result);
-        R R = JSONObject.parseObject(resultJson, R.class);
-        gatewayInvokeContext.setBaseResponse(R);
+        R r = JSONObject.parseObject(resultJson, R.class);
+        gatewayInvokeContext.setBaseResponse(r);
     }
 
     /**
