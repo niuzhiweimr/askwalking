@@ -94,7 +94,7 @@
     api_reload, mock_response, system_guard, flow_control_rule_type, qps, avg_rt, max_thread,
     sign_check, status, delete_flag, operator, update_time, create_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.trafficbu.etc.gateway.manager.model.ConfigureApiExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cloud.askwalking.repository.model.ConfigureApiExample" >
     select
     <if test="distinct" >
       distinct
@@ -126,13 +126,13 @@
     delete from gw_configure_api
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.trafficbu.etc.gateway.manager.model.ConfigureApiExample" >
+  <delete id="deleteByExample" parameterType="com.cloud.askwalking.repository.model.ConfigureApiExample" >
     delete from gw_configure_api
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.trafficbu.etc.gateway.manager.model.ConfigureApiDO" >
+  <insert id="insert" parameterType="com.cloud.askwalking.repository.model.ConfigureApiDO" >
     insert into gw_configure_api (id, application_name, protocol,
       content_type, api_type, request_uri,
       request_method, api_interface, api_version,
@@ -152,7 +152,7 @@
       #{status,jdbcType=INTEGER}, #{deleteFlag,jdbcType=BIT}, #{operator,jdbcType=VARCHAR},
       #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.trafficbu.etc.gateway.manager.model.ConfigureApiDO" >
+  <insert id="insertSelective" parameterType="com.cloud.askwalking.repository.model.ConfigureApiDO" >
     insert into gw_configure_api
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -321,7 +321,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.trafficbu.etc.gateway.manager.model.ConfigureApiExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.cloud.askwalking.repository.model.ConfigureApiExample" resultType="java.lang.Integer" >
     select count(*) from gw_configure_api
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -449,7 +449,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.trafficbu.etc.gateway.manager.model.ConfigureApiDO" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloud.askwalking.repository.model.ConfigureApiDO" >
     update gw_configure_api
     <set >
       <if test="applicationName != null" >
@@ -533,7 +533,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.trafficbu.etc.gateway.manager.model.ConfigureApiDO" >
+  <update id="updateByPrimaryKey" parameterType="com.cloud.askwalking.repository.model.ConfigureApiDO" >
     update gw_configure_api
     set application_name = #{applicationName,jdbcType=VARCHAR},
       protocol = #{protocol,jdbcType=VARCHAR},

@@ -19,6 +19,8 @@ public class AdminResourceContextHandler extends AbstractGatewayContextHandler i
 
     private final Set<String> handleTypes = Sets.newHashSet(GatewayConstant.ADMIN);
 
+    private final Set<String> protocolTypes = Sets.newHashSet(GatewayConstant.RPC, GatewayConstant.FEIGN);
+
     private ApplicationContext applicationContext;
 
     @Override
@@ -31,6 +33,11 @@ public class AdminResourceContextHandler extends AbstractGatewayContextHandler i
     @Override
     public Set<String> handleType() {
         return this.handleTypes;
+    }
+
+    @Override
+    public Set<String> protocolType() {
+        return this.protocolTypes;
     }
 
     @Override

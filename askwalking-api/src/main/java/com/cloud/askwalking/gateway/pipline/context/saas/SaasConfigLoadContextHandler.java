@@ -4,6 +4,7 @@ import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.common.enums.GatewayErrorCode;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import com.cloud.askwalking.core.domain.SaasConfigInfo;
+import com.cloud.askwalking.gateway.helper.HelperService;
 import com.cloud.askwalking.gateway.pipline.context.common.AbstractConfigLoadContextHandler;
 import com.cloud.askwalking.repository.model.SaasConfigDO;
 import com.google.common.collect.Sets;
@@ -22,10 +23,7 @@ public class SaasConfigLoadContextHandler extends AbstractConfigLoadContextHandl
 
     private final Set<String> handleTypes = Sets.newHashSet(GatewayConstant.SAAS);
 
-    @Override
-    public Set<String> handleType() {
-        return this.handleTypes;
-    }
+    private final Set<String> protocolTypes = Sets.newHashSet(GatewayConstant.RPC, GatewayConstant.FEIGN);
 
     @Override
     public Boolean getConfig(GatewayInvokeContext context) {
@@ -49,8 +47,8 @@ public class SaasConfigLoadContextHandler extends AbstractConfigLoadContextHandl
                 return putDebugErrorResult(context, GatewayErrorCode.SAAS_TIMESTAMP_IS_NULL);
             }
 
-            //SaasConfigService saasConfigService = applicationContext.getBean(SaasConfigService.class);
-            SaasConfigDO saasConfigDO = null;//saasConfigService.getSaasByOpenId(openId);
+            HelperService helperService = applicationContext.getBean(HelperService.class);
+            SaasConfigDO saasConfigDO = helperService.getSaasByOpenId(openId);
             if (Objects.isNull(saasConfigDO)) {
                 log.error("[SaasConfigLoadContextHandler] SaasConfigDO isNull");
                 return putDebugErrorResult(context, GatewayErrorCode.SAAS_CONFIG_NON_EXISTENT);
@@ -69,4 +67,15 @@ public class SaasConfigLoadContextHandler extends AbstractConfigLoadContextHandl
 
         return true;
     }
+
+    @Override
+    public Set<String> handleType() {
+        return this.handleTypes;
+    }
+
+    @Override
+    public Set<String> protocolType() {
+        return this.protocolTypes;
+    }
+
 }

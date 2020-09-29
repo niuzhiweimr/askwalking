@@ -4,10 +4,11 @@ import com.cloud.askwalking.core.AbstractGatewayServiceDiscovery;
 import com.cloud.askwalking.core.domain.ApiConfig;
 import com.cloud.askwalking.core.domain.FlowControlRule;
 import com.cloud.askwalking.core.domain.GatewayMethodDefinition;
+import com.cloud.askwalking.gateway.helper.HelperService;
 import com.cloud.askwalking.gateway.pipline.GatewayInvokePipeline;
 import com.cloud.askwalking.gateway.pipline.context.flowcontrol.FlowControlRuleHolder;
-import com.google.common.collect.Sets;
 import com.cloud.askwalking.repository.model.ConfigureApiDO;
+import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -63,9 +64,8 @@ public class GatewayServiceDiscovery extends AbstractGatewayServiceDiscovery imp
     private void processGatewayServices() {
 
         try {
-            // GatewayApiService gatewayApiService = this.applicationContext.getBean(GatewayApiService.class);
-
-            List<ConfigureApiDO> configureApiDOList = null;
+            HelperService helperService = this.applicationContext.getBean(HelperService.class);
+            List<ConfigureApiDO> configureApiDOList = helperService.getApiAll();
             if (CollectionUtils.isEmpty(configureApiDOList)) {
                 log.error("[GatewayServiceDiscovery]Gateway api Config Not Found");
             }
@@ -136,6 +136,8 @@ public class GatewayServiceDiscovery extends AbstractGatewayServiceDiscovery imp
 
         //api接口标识
         definition.setFlowControlRuleType(configureApi.getFlowControlRuleType());
+        definition.setProtocol(configureApi.getProtocol());
+        definition.setContentType(configureApi.getContentType());
         definition.setApiReload(configureApi.getApiReload());
         definition.setSystemGuard(configureApi.getSystemGuard());
         definition.setApiAsync(configureApi.getApiAsync());
@@ -150,21 +152,21 @@ public class GatewayServiceDiscovery extends AbstractGatewayServiceDiscovery imp
 
     /**
      * 修改元数据方法定义钩子
-     * TODO:当前方法处理维度太大后续细化，1.1版本优化时做
+     *
+     * @param uri 接口地址
      */
-    public void updateMetadataMethodDefinitionHook() {
+    public void updateMetadataMethodDefinitionHook(String uri) {
 
         try {
 
-            //GatewayApiService gatewayApiService = this.applicationContext.getBean(GatewayApiService.class);
-
-            List<ConfigureApiDO> configureApiDOList = null;
-            if (CollectionUtils.isEmpty(configureApiDOList)) {
+            HelperService helperService = this.applicationContext.getBean(HelperService.class);
+            ConfigureApiDO configureApiDo = helperService.getApiByUri(uri);
+            if (configureApiDo == null) {
                 log.warn("[GatewayServiceDiscovery]offlineMethodDefinitionHook Gateway api Config Not Found");
                 return;
             }
 
-            configureApiDOList.forEach(this::saveGatewayMethodDefinition);
+            saveGatewayMethodDefinition(configureApiDo);
 
         } catch (Exception e) {
             log.error("[GatewayServiceDiscovery]offlineMethodDefinitionHook Error", e);
@@ -173,28 +175,24 @@ public class GatewayServiceDiscovery extends AbstractGatewayServiceDiscovery imp
 
     /**
      * 更新方法定义钩子
-     * TODO:当前方法处理维度太大后续细化，1.1版本优化时做
+     *
+     * @param uri 接口地址
      */
-    public void updateMethodDefinitionHook() {
+    public void updateMethodDefinitionHook(String uri) {
 
         try {
 
-            //GatewayApiService gatewayApiService = this.applicationContext.getBean(GatewayApiService.class);
-
-            List<ConfigureApiDO> configureApiDOList = null;
-            if (CollectionUtils.isEmpty(configureApiDOList)) {
+            HelperService helperService = this.applicationContext.getBean(HelperService.class);
+            ConfigureApiDO configureApiDo = helperService.getApiByUri(uri);
+            if (configureApiDo == null) {
                 log.warn("[GatewayServiceDiscovery]updateMethodDefinitionHook Gateway api Config Not Found");
                 return;
             }
 
-            configureApiDOList.forEach(this::saveGatewayMethodDefinition);
+            saveGatewayMethodDefinition(configureApiDo);
+            GatewayMethodDefinition methodDefinition = this.getMethodDefinition(uri);
 
-            this.getUriMappings().forEach(uri -> {
-                GatewayMethodDefinition methodDefinition = this.getMethodDefinition(uri);
-                //添加api限流 目前不做系统限流
-                FlowControlRuleHolder.addInterfaceRule(methodDefinition);
-            });
-
+            FlowControlRuleHolder.addInterfaceRule(methodDefinition);
             FlowControlRuleHolder.reloadFlowRules();
 
         } catch (Exception e) {
@@ -205,34 +203,27 @@ public class GatewayServiceDiscovery extends AbstractGatewayServiceDiscovery imp
 
     /**
      * 添加方法定义钩子
-     * TODO:当前方法处理维度太大后续细化，1.1版本优化时做
+     *
+     * @param uri 接口地址
      */
-    public void addMethodDefinitionHook() {
+    public void addMethodDefinitionHook(String uri) {
 
         try {
 
-            //GatewayApiService gatewayApiService = this.applicationContext.getBean(GatewayApiService.class);
-
-            List<ConfigureApiDO> configureApiDOList = null;
-            if (CollectionUtils.isEmpty(configureApiDOList)) {
+            HelperService helperService = this.applicationContext.getBean(HelperService.class);
+            ConfigureApiDO configureApiDo = helperService.getApiByUri(uri);
+            if (configureApiDo == null) {
                 log.warn("[GatewayServiceDiscovery]addMethodDefinitionHook Gateway api Config Not Found");
                 return;
             }
 
-            configureApiDOList.forEach(this::saveGatewayMethodDefinition);
+            saveGatewayMethodDefinition(configureApiDo);
+            GatewayMethodDefinition methodDefinition = this.getMethodDefinition(uri);
 
-            this.getUriMappings().forEach(uri -> {
-                GatewayMethodDefinition methodDefinition = this.getMethodDefinition(uri);
-                //添加api限流 目前不做系统限流
-                FlowControlRuleHolder.addInterfaceRule(methodDefinition);
-            });
-
-            buildHandleType(configureApiDOList);
-
-            configureApiDOList.forEach(this::buildHandleMapping);
-
+            FlowControlRuleHolder.addInterfaceRule(methodDefinition);
+            buildHandleType(configureApiDo);
+            buildHandleMapping(configureApiDo);
             buildGatewayInvokePipeline();
-
             FlowControlRuleHolder.reloadFlowRules();
 
         } catch (Exception e) {
@@ -252,6 +243,18 @@ public class GatewayServiceDiscovery extends AbstractGatewayServiceDiscovery imp
                 GATEWAY_HANDLE_TYPE.add(configureApiDO.getApiType());
             }
         });
+    }
+
+    /**
+     * 构建处理类型
+     *
+     * @param configureApiDo
+     */
+    private void buildHandleType(ConfigureApiDO configureApiDo) {
+
+        if (!this.GATEWAY_HANDLE_TYPE.contains(configureApiDo.getApiType())) {
+            GATEWAY_HANDLE_TYPE.add(configureApiDo.getApiType());
+        }
     }
 
     /**

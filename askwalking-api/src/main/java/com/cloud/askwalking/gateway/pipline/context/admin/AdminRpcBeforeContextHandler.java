@@ -1,6 +1,8 @@
 package com.cloud.askwalking.gateway.pipline.context.admin;
 
+import com.alibaba.cloud.dubbo.service.DubboGenericServiceFactory;
 import com.cloud.askwalking.common.constants.GatewayConstant;
+import com.cloud.askwalking.common.exception.ErrorCode;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import com.cloud.askwalking.gateway.pipline.AbstractGatewayContextHandler;
 import com.google.common.collect.Sets;
@@ -12,20 +14,28 @@ import org.springframework.context.ApplicationContextAware;
 import java.util.Set;
 
 /**
- * 用户鉴权是否需要从用户服务中处理用户鉴权相关问题
- *
  * @author niuzhiwei
  */
 @Slf4j
-public class AdminAuthContextHandler extends AbstractGatewayContextHandler implements ApplicationContextAware {
+public class AdminRpcBeforeContextHandler extends AbstractGatewayContextHandler implements ApplicationContextAware {
 
     private final Set<String> handleTypes = Sets.newHashSet(GatewayConstant.ADMIN);
 
-    private final Set<String> protocolTypes = Sets.newHashSet(GatewayConstant.RPC, GatewayConstant.FEIGN);
+    private final Set<String> protocolTypes = Sets.newHashSet(GatewayConstant.RPC);
+
+    private ApplicationContext applicationContext;
 
     @Override
     public boolean handleGatewayInvoke(GatewayInvokeContext gatewayInvokeContext) {
-        //用户鉴权相关 需要下游服务提供接口
+
+        try {
+            gatewayInvokeContext.setServiceFactory(this.applicationContext.getBean(DubboGenericServiceFactory.class));
+            gatewayInvokeContext.preBuildRpc();
+        } catch (BeansException e) {
+            log.error("[AdminBeforeContextHandler] Exception in building Dubbo metadata：", e);
+            return putDebugErrorResult(gatewayInvokeContext, ErrorCode.SYSTEM_ERROR);
+        }
+
         return true;
     }
 
@@ -40,12 +50,12 @@ public class AdminAuthContextHandler extends AbstractGatewayContextHandler imple
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-
+    public int getOrder() {
+        return 50;
     }
 
     @Override
-    public int getOrder() {
-        return 30;
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }

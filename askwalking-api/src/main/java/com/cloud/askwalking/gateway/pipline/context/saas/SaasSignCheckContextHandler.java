@@ -22,15 +22,7 @@ public class SaasSignCheckContextHandler extends AbstractSignCheckContextHandler
 
     private final Set<String> handleTypes = Sets.newHashSet(GatewayConstant.SAAS);
 
-    @Override
-    public int getOrder() {
-        return 30;
-    }
-
-    @Override
-    public Set<String> handleType() {
-        return this.handleTypes;
-    }
+    private final Set<String> protocolTypes = Sets.newHashSet(GatewayConstant.RPC, GatewayConstant.FEIGN);
 
     @Override
     protected Boolean buildSignStr(GatewayInvokeContext context) {
@@ -91,4 +83,20 @@ public class SaasSignCheckContextHandler extends AbstractSignCheckContextHandler
         Map<String, Object> serviceParam = JSON.parseObject(sourceParam);
         context.setServiceParam(serviceParam);
     }
+
+    @Override
+    public Set<String> handleType() {
+        return this.handleTypes;
+    }
+
+    @Override
+    public Set<String> protocolType() {
+        return this.protocolTypes;
+    }
+
+    @Override
+    public int getOrder() {
+        return 30;
+    }
+
 }

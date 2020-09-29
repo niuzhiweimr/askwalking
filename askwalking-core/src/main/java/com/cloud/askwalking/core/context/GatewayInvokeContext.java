@@ -4,21 +4,25 @@ import com.alibaba.cloud.dubbo.metadata.DubboRestServiceMetadata;
 import com.alibaba.cloud.dubbo.metadata.RestMethodMetadata;
 import com.alibaba.cloud.dubbo.metadata.ServiceRestMetadata;
 import com.alibaba.cloud.dubbo.service.DubboGenericServiceFactory;
-import com.cloud.askwalking.core.domain.GatewayMethodDefinition;
 import com.cloud.askwalking.common.domain.R;
+import com.cloud.askwalking.core.domain.GatewayMethodDefinition;
 import com.cloud.askwalking.core.domain.SaasConfigInfo;
 import com.cloud.askwalking.core.domain.UseAuthInfo;
+import feign.Request;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.rpc.service.GenericService;
+import org.springframework.cloud.openfeign.ribbon.LoadBalancerFeignClient;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -41,6 +45,14 @@ public class GatewayInvokeContext {
     private ServiceRestMetadata serviceRestMetadata;
 
     private DubboGenericServiceFactory serviceFactory;
+
+    private LoadBalancerFeignClient loadBalancerFeignClient;
+
+    private String feignUrl;
+
+    private Map<String, Collection<String>> feignHeader;
+
+    private Request.Options feignRequestOptions;
 
     private final Map<String, Object> dubboTranslatedAttributes = new HashMap<>();
 
@@ -90,6 +102,26 @@ public class GatewayInvokeContext {
     public String getApiType() {
         return (this.methodDefinition != null) ? this.methodDefinition.getApiType() : "";
     }
+
+
+    /**
+     * 获取ContentType
+     *
+     * @return
+     */
+    public String getContentType() {
+        return (this.methodDefinition != null) ? this.methodDefinition.getContentType() : "";
+    }
+
+    /**
+     * 获取协议类型
+     *
+     * @return
+     */
+    public String getProtocolType() {
+        return (this.methodDefinition != null) ? this.methodDefinition.getProtocol() : "";
+    }
+
 
     /**
      * 获取api版本
@@ -236,7 +268,7 @@ public class GatewayInvokeContext {
      *
      * @return
      */
-    public String getUrl() {
+    public String getDubboUrl() {
 
         StringBuilder url = new StringBuilder();
         url.append(this.getRequestURI());
@@ -263,7 +295,7 @@ public class GatewayInvokeContext {
     public void buildServiceRestMetadata() {
 
         ServiceRestMetadata serviceRestMetadata = new ServiceRestMetadata();
-        serviceRestMetadata.setUrl(this.getUrl());
+        serviceRestMetadata.setUrl(this.getDubboUrl());
         this.setServiceRestMetadata(serviceRestMetadata);
     }
 
@@ -279,10 +311,46 @@ public class GatewayInvokeContext {
     /**
      * 预构建RPC调用
      */
-    public void preBuild() {
+    public void preBuildRpc() {
         this.buildServiceRestMetadata();
         this.buildDubboTranslatedAttributes();
     }
+
+    /**
+     * 预构建Feign调用
+     */
+    public void preBuildFeign() {
+        this.feignUrl = "http://" + this.getApiInterface();
+        this.feignHeader = createFeignHeader(this.getContentType());
+        this.feignRequestOptions = new Request.Options(10000, 60000);
+    }
+
+    /**
+     * 自定义构建
+     *
+     * @param apiInterface
+     */
+    public void customBuildFeign(String apiInterface) {
+        this.feignUrl = apiInterface;
+        this.feignHeader = createFeignHeader("application/json");
+        this.feignRequestOptions = new Request.Options(10000, 60000);
+    }
+
+    /**
+     * 创建feignHeader
+     *
+     * @param contentType
+     * @return
+     */
+    private Map<String, Collection<String>> createFeignHeader(String contentType) {
+
+        Map<String, Collection<String>> header = new HashMap<>(3);
+        header.put("Content-Type", Arrays.asList(contentType));
+        header.put("Accept", Arrays.asList("*/*"));
+        header.put("Connection", Arrays.asList("keep-alive"));
+        return header;
+    }
+
 
     /**
      * 获取dubbo泛化service

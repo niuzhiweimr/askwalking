@@ -1,17 +1,22 @@
 package com.cloud.askwalking.gateway.pipline.context.common;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import com.cloud.askwalking.common.domain.R;
 import com.cloud.askwalking.common.exception.ErrorCode;
-import com.cloud.askwalking.gateway.pipline.AbstractGatewayContextHandler;
+import com.cloud.askwalking.common.utils.InputStreamUtil;
+import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import com.cloud.askwalking.core.domain.ApiConfig;
 import com.cloud.askwalking.core.domain.GatewayMethodDefinition;
+import com.cloud.askwalking.gateway.pipline.AbstractGatewayContextHandler;
+import com.google.gson.Gson;
+import feign.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
@@ -25,11 +30,6 @@ public class TailContextHandler extends AbstractGatewayContextHandler {
     @Override
     public boolean handleGatewayInvoke(GatewayInvokeContext gatewayInvokeContext) {
         return false;
-    }
-
-    @Override
-    public Set<String> handleType() {
-        return null;
     }
 
     @Override
@@ -106,17 +106,36 @@ public class TailContextHandler extends AbstractGatewayContextHandler {
     private static void finishGatewayInvoke(GatewayInvokeContext context) {
         R r;
         try {
+
             Object result = context.getFuture().get();
-            String resultJson = JSONObject.toJSONString(result);
-            r = JSONObject.parseObject(resultJson, R.class);
+            if (result instanceof Response) {
+                Response response = (Response) result;
+                InputStream inputStream = response.body().asInputStream();
+                byte[] bytes = InputStreamUtil.readInputStream(inputStream);
+                r = new Gson().fromJson(new String(bytes), R.class);
+            } else {
+                String resultJson = new Gson().toJson(result);
+                r = new Gson().fromJson(resultJson, R.class);
+            }
+
             context.setBaseResponse(r);
             handleGatewayResponse(context);
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException | IOException e) {
             log.error("[TailContextHandler] Get asynchronous result, interface response exception：", e);
             r = R.fail(ErrorCode.SYSTEM_ERROR.getErrorCode(), ErrorCode.SYSTEM_ERROR.getErrorReason());
             context.setBaseResponse(r);
             handleGatewayResponse(context);
         }
+    }
+
+    @Override
+    public Set<String> handleType() {
+        return null;
+    }
+
+    @Override
+    public Set<String> protocolType() {
+        return null;
     }
 
     @Override

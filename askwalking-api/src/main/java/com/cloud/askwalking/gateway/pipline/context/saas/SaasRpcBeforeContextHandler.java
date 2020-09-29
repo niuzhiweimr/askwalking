@@ -1,4 +1,4 @@
-package com.cloud.askwalking.gateway.pipline.context.api;
+package com.cloud.askwalking.gateway.pipline.context.saas;
 
 import com.alibaba.cloud.dubbo.service.DubboGenericServiceFactory;
 import com.cloud.askwalking.common.constants.GatewayConstant;
@@ -17,9 +17,11 @@ import java.util.Set;
  * @author niuzhiwei
  */
 @Slf4j
-public class BeforeContextHandler extends AbstractGatewayContextHandler implements ApplicationContextAware {
+public class SaasRpcBeforeContextHandler extends AbstractGatewayContextHandler implements ApplicationContextAware {
 
-    private final Set<String> handleTypes = Sets.newHashSet(GatewayConstant.API);
+    private final Set<String> handleTypes = Sets.newHashSet(GatewayConstant.SAAS);
+
+    private final Set<String> protocolTypes = Sets.newHashSet(GatewayConstant.RPC);
 
     private ApplicationContext applicationContext;
 
@@ -28,9 +30,9 @@ public class BeforeContextHandler extends AbstractGatewayContextHandler implemen
 
         try {
             gatewayInvokeContext.setServiceFactory(this.applicationContext.getBean(DubboGenericServiceFactory.class));
-            gatewayInvokeContext.preBuild();
+            gatewayInvokeContext.preBuildRpc();
         } catch (BeansException e) {
-            log.error("[BeforeContextHandler] Exception in building Dubbo metadata：", e);
+            log.error("[SaasBeforeContextHandler] Exception in building Dubbo metadata：", e);
             return putDebugErrorResult(gatewayInvokeContext, ErrorCode.SYSTEM_ERROR);
         }
 
@@ -40,6 +42,11 @@ public class BeforeContextHandler extends AbstractGatewayContextHandler implemen
     @Override
     public Set<String> handleType() {
         return this.handleTypes;
+    }
+
+    @Override
+    public Set<String> protocolType() {
+        return this.protocolTypes;
     }
 
     @Override

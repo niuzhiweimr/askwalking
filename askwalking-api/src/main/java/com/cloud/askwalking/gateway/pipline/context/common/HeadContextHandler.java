@@ -17,11 +17,18 @@ public class HeadContextHandler extends AbstractGatewayContextHandler {
 
     private GatewayServiceDiscovery gatewayServiceDiscovery;
 
-
     public HeadContextHandler(GatewayServiceDiscovery serviceDiscovery) {
         this.gatewayServiceDiscovery = serviceDiscovery;
     }
 
+    @Override
+    public void fireGatewayInvoke(GatewayInvokeContext gatewayInvokeContext) {
+        if (handleGatewayInvoke(gatewayInvokeContext)) {
+            this.next.fireGatewayInvoke(gatewayInvokeContext);
+        } else {
+            this.tail.fireGatewayInvoke(gatewayInvokeContext);
+        }
+    }
 
     @Override
     public boolean handleGatewayInvoke(GatewayInvokeContext gatewayInvokeContext) {
@@ -55,12 +62,8 @@ public class HeadContextHandler extends AbstractGatewayContextHandler {
     }
 
     @Override
-    public void fireGatewayInvoke(GatewayInvokeContext gatewayInvokeContext) {
-        if (handleGatewayInvoke(gatewayInvokeContext)) {
-            this.next.fireGatewayInvoke(gatewayInvokeContext);
-        } else {
-            this.tail.fireGatewayInvoke(gatewayInvokeContext);
-        }
+    public Set<String> protocolType() {
+        return null;
     }
 
     @Override

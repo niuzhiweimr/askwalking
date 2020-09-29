@@ -47,11 +47,10 @@ public enum GatewayErrorCode implements StatusDefinition {
     /**
      * SAAS相关 2051 ~ 2090
      */
-    JWT_ERROR(2051, "jwt处理异常"),
+    JWT_AUTHORIZATION_ERROR(2051, "jwt鉴权失败"),
     JWT_TOKEN_HEADER_IS_NULL(2052, "jwt token header空"),
-    JWT_TOKEN_IS_NULL(2053, "jwt token 空"),
-    JWT_AUTHORIZATION_HEADER_PREFIX_NON_EXISTENT(2054, "jwt权限前缀无效"),
-    JWT_AUTHORIZATION_TOKEN_IS_NULL(2055, "jwt获取认证令牌空"),
+    JWT_EXPIRE(2053, "jwt token过期"),
+    JWT_AUTHORIZATION_TOKEN_IS_NULL(2054, "jwt获取认证令牌空"),
     ;
 
 

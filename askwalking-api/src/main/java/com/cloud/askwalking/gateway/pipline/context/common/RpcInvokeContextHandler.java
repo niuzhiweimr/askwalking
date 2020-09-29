@@ -19,9 +19,11 @@ import java.util.concurrent.CompletableFuture;
  * @author niuzhiwei
  */
 @Slf4j
-public class ServiceInvokeContextHandler extends AbstractGatewayContextHandler {
+public class RpcInvokeContextHandler extends AbstractGatewayContextHandler {
 
     private final Set<String> handleTypes = Sets.newHashSet(GatewayConstant.API, GatewayConstant.ADMIN, GatewayConstant.SAAS);
+
+    private final Set<String> protocolTypes = Sets.newHashSet(GatewayConstant.RPC);
 
     @Override
     public boolean handleGatewayInvoke(GatewayInvokeContext gatewayInvokeContext) {
@@ -39,10 +41,10 @@ public class ServiceInvokeContextHandler extends AbstractGatewayContextHandler {
             }
 
         } catch (RpcException e) {
-            log.error("[ServiceInvokeContextHandler] handler RpcException:", e);
+            log.error("[RpcInvokeContextHandler] handler RpcException:", e);
             return putDebugErrorResult(gatewayInvokeContext, ErrorCode.MISSING_SERVER_PROVIDER);
         } catch (Exception e) {
-            log.error("[ServiceInvokeContextHandler] handler Exception:", e);
+            log.error("[RpcInvokeContextHandler] handler Exception:", e);
             return putDebugErrorResult(gatewayInvokeContext, ErrorCode.SYSTEM_ERROR);
         }
 
@@ -58,7 +60,7 @@ public class ServiceInvokeContextHandler extends AbstractGatewayContextHandler {
     private void invokeSync(GatewayInvokeContext gatewayInvokeContext, GenericService genericService) {
 
         if (log.isDebugEnabled()) {
-            log.debug("[ServiceInvokeContextHandler] invoke sync");
+            log.debug("[RpcInvokeContextHandler] invoke sync");
         }
 
         Object result = genericService.$invoke(gatewayInvokeContext.getApiMethod(),
@@ -77,7 +79,7 @@ public class ServiceInvokeContextHandler extends AbstractGatewayContextHandler {
     private void invokeAsync(GatewayInvokeContext gatewayInvokeContext, GenericService genericService) {
 
         if (log.isDebugEnabled()) {
-            log.debug("[ServiceInvokeContextHandler] invoke async");
+            log.debug("[RpcInvokeContextHandler] invoke async");
         }
 
         CompletableFuture<Object> future = genericService.$invokeAsync(gatewayInvokeContext.getApiMethod(),
@@ -90,6 +92,11 @@ public class ServiceInvokeContextHandler extends AbstractGatewayContextHandler {
     @Override
     public Set<String> handleType() {
         return this.handleTypes;
+    }
+
+    @Override
+    public Set<String> protocolType() {
+        return this.protocolTypes;
     }
 
     @Override

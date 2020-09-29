@@ -18,6 +18,8 @@ public class ParamParseContextHandler extends AbstractGatewayContextHandler {
 
     private final Set<String> handleTypes = Sets.newHashSet(GatewayConstant.API);
 
+    private final Set<String> protocolTypes = Sets.newHashSet(GatewayConstant.RPC, GatewayConstant.FEIGN);
+
     @Override
     public boolean handleGatewayInvoke(GatewayInvokeContext gatewayInvokeContext) {
         boolean result;
@@ -33,6 +35,11 @@ public class ParamParseContextHandler extends AbstractGatewayContextHandler {
     @Override
     public Set<String> handleType() {
         return this.handleTypes;
+    }
+
+    @Override
+    public Set<String> protocolType() {
+        return this.protocolTypes;
     }
 
     @Override

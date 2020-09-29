@@ -14,6 +14,13 @@ public class GatewayConstant {
 
     public static final String SAAS = "SAAS";
 
+    /**
+     * 网关调用协议
+     */
+    public static final String RPC = "RPC";
+
+    public static final String FEIGN = "FEIGN";
+
 
     /**
      * 限流类型

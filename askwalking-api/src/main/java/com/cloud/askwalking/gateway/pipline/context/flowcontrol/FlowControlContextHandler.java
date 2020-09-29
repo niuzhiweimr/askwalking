@@ -25,7 +25,10 @@ import java.util.Set;
 @Slf4j
 public class FlowControlContextHandler extends AbstractGatewayContextHandler {
 
-    private final Set<String> handleTypes = Sets.newHashSet(GatewayConstant.API, GatewayConstant.ADMIN, GatewayConstant.SAAS);
+    private final Set<String> handleTypes = Sets.newHashSet(GatewayConstant.API
+            , GatewayConstant.ADMIN, GatewayConstant.SAAS);
+
+    private final Set<String> protocolTypes = Sets.newHashSet(GatewayConstant.RPC, GatewayConstant.FEIGN);
 
     @Override
     public void initContextHandler(AbstractGatewayServiceDiscovery gatewayServiceDiscovery) {
@@ -101,6 +104,11 @@ public class FlowControlContextHandler extends AbstractGatewayContextHandler {
     @Override
     public Set<String> handleType() {
         return this.handleTypes;
+    }
+
+    @Override
+    public Set<String> protocolType() {
+        return this.protocolTypes;
     }
 
     @Override

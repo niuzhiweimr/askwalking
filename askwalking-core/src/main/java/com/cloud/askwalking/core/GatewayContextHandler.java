@@ -32,4 +32,11 @@ public interface GatewayContextHandler extends Ordered {
      */
     Set<String> handleType();
 
+    /**
+     * 协议类型
+     *
+     * @return
+     */
+    Set<String> protocolType();
+
 }

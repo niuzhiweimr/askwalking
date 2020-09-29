@@ -43,7 +43,7 @@ public abstract class AbstractGatewayContextHandler implements GatewayContextHan
     }
 
     private boolean canHandle(GatewayInvokeContext context) {
-        return handleType().contains(context.getApiType());
+        return  handleType().contains(context.getApiType()) && protocolType().contains(context.getProtocolType());
     }
 
     protected boolean putDebugErrorResult(GatewayInvokeContext gatewayInvokeContext, StatusDefinition statusDefinition) {

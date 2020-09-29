@@ -14,6 +14,8 @@ public class AdminSignCheckContextHandler extends AbstractSignCheckContextHandle
 
     private final Set<String> handleTypes = Sets.newHashSet(GatewayConstant.ADMIN);
 
+    private final Set<String> protocolTypes = Sets.newHashSet(GatewayConstant.RPC, GatewayConstant.FEIGN);
+
     @Override
     public int getOrder() {
         return 20;
@@ -22,6 +24,11 @@ public class AdminSignCheckContextHandler extends AbstractSignCheckContextHandle
     @Override
     public Set<String> handleType() {
         return this.handleTypes;
+    }
+
+    @Override
+    public Set<String> protocolType() {
+        return this.protocolTypes;
     }
 
     @Override

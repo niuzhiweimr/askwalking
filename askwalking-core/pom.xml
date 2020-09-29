@@ -51,6 +51,11 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-dubbo</artifactId>
         </dependency>
+        <!-- Feign Spring Cloud Starter -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
         <!-- skyWalking traceId生成 -->
         <dependency>
             <groupId>org.apache.skywalking</groupId>

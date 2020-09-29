@@ -19,7 +19,7 @@ import javax.sql.DataSource;
  * @author niuzhiwei
  */
 @Configuration
-@MapperScan(basePackages = {"com.cloud.askwalking.repository.manager.dao"}, sqlSessionFactoryRef = "sqlSessionFactory")
+@MapperScan(basePackages = {"com.cloud.askwalking.repository.dao"}, sqlSessionFactoryRef = "sqlSessionFactory")
 public class DataSourceConfig {
 
 

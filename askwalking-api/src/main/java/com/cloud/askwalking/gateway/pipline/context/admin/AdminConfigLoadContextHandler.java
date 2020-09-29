@@ -16,9 +16,16 @@ public class AdminConfigLoadContextHandler extends AbstractConfigLoadContextHand
 
     private final Set<String> handleTypes = Sets.newHashSet(GatewayConstant.ADMIN);
 
+    private final Set<String> protocolTypes = Sets.newHashSet(GatewayConstant.RPC, GatewayConstant.FEIGN);
+
     @Override
     public Set<String> handleType() {
         return this.handleTypes;
+    }
+
+    @Override
+    public Set<String> protocolType() {
+        return this.protocolTypes;
     }
 
     @Override

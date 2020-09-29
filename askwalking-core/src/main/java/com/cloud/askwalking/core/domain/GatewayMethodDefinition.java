@@ -20,6 +20,10 @@ public class GatewayMethodDefinition {
 
     private String applicationName;
 
+    private String protocol;
+
+    private String contentType;
+
     private String apiType;
 
     private Boolean apiReload;
