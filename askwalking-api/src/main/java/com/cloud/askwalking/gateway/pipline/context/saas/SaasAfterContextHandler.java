@@ -1,9 +1,9 @@
 package com.cloud.askwalking.gateway.pipline.context.saas;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.common.enums.GatewayErrorCode;
-import com.cloud.askwalking.common.utils.RSAUtils;
+import com.cloud.askwalking.common.tool.JSONTool;
+import com.cloud.askwalking.common.tool.RSATool;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import com.cloud.askwalking.gateway.pipline.AbstractGatewayContextHandler;
 import com.google.common.collect.Sets;
@@ -37,10 +37,10 @@ public class SaasAfterContextHandler extends AbstractGatewayContextHandler {
             }
             if (log.isDebugEnabled()) {
                 log.debug("[SaasAfterContextHandler]The downstream service response data is:{}"
-                        , JSONObject.toJSONString(result));
+                        , JSONTool.toJson(result));
             }
-            String resultStr = JSONObject.toJSONString(result);
-            String ciphertext = RSAUtils.encryptByPrivateKey(resultStr
+            String resultStr = JSONTool.toJson(result);
+            String ciphertext = RSATool.encryptByPrivateKey(resultStr
                     , gatewayInvokeContext.getSaasConfigInfo().getPrivateKey());
             gatewayInvokeContext.getBaseResponse().setResult(ciphertext);
 

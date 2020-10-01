@@ -1,4 +1,4 @@
-package com.cloud.askwalking.common.utils;
+package com.cloud.askwalking.common.tool;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -9,7 +9,7 @@ import java.io.*;
  * 
  * @author Eric Pan
  */
-public class Base64Utils {  
+public class Base64Tool {
   
     /**  
      * 文件读取缓冲区大小  

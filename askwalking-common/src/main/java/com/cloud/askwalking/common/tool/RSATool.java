@@ -1,4 +1,4 @@
-package com.cloud.askwalking.common.utils;
+package com.cloud.askwalking.common.tool;
 
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
@@ -20,7 +20,7 @@ import java.util.Map;
  *
  * @author niuzhiwei
  */
-public class RSAUtils {
+public class RSATool {
 
     /**
      * 加密算法RSA
@@ -85,7 +85,7 @@ public class RSAUtils {
     public static String getPrivateKey(Map<String, Object> keyMap)
             throws Exception {
         Key key = (Key) keyMap.get(PRIVATE_KEY);
-        return Base64Utils.encode(key.getEncoded());
+        return Base64Tool.encode(key.getEncoded());
     }
 
     /**
@@ -100,7 +100,7 @@ public class RSAUtils {
     public static String getPublicKey(Map<String, Object> keyMap)
             throws Exception {
         Key key = (Key) keyMap.get(PUBLIC_KEY);
-        return Base64Utils.encode(key.getEncoded());
+        return Base64Tool.encode(key.getEncoded());
     }
 
     /**
@@ -130,14 +130,14 @@ public class RSAUtils {
      * @throws Exception
      */
     public static String sign(byte[] data, String privateKey) throws Exception {
-        byte[] keyBytes = Base64Utils.decode(privateKey);
+        byte[] keyBytes = Base64Tool.decode(privateKey);
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         PrivateKey privateK = keyFactory.generatePrivate(pkcs8KeySpec);
         Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);
         signature.initSign(privateK);
         signature.update(data);
-        return Base64Utils.encode(signature.sign());
+        return Base64Tool.encode(signature.sign());
     }
 
 
@@ -172,14 +172,14 @@ public class RSAUtils {
      */
     public static boolean verify(byte[] data, String publicKey, String sign)
             throws Exception {
-        byte[] keyBytes = Base64Utils.decode(publicKey);
+        byte[] keyBytes = Base64Tool.decode(publicKey);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         PublicKey publicK = keyFactory.generatePublic(keySpec);
         Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);
         signature.initVerify(publicK);
         signature.update(data);
-        return signature.verify(Base64Utils.decode(sign));
+        return signature.verify(Base64Tool.decode(sign));
     }
 
     /**
@@ -195,7 +195,7 @@ public class RSAUtils {
     public static String encryptByPrivateKey(String source, String privateKey)
             throws Exception {
         byte[] bytes = encryptByPrivateKey(source.getBytes(), privateKey);
-        return Base64Utils.encode(bytes);
+        return Base64Tool.encode(bytes);
     }
 
     /**
@@ -210,7 +210,7 @@ public class RSAUtils {
      */
     public static byte[] encryptByPrivateKey(byte[] data, String privateKey)
             throws Exception {
-        byte[] keyBytes = Base64Utils.decode(privateKey);
+        byte[] keyBytes = Base64Tool.decode(privateKey);
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         Key privateK = keyFactory.generatePrivate(pkcs8KeySpec);
@@ -249,7 +249,7 @@ public class RSAUtils {
      */
     public static String decryptByPublicKey(String data,
                                             String publicKey) throws Exception {
-        byte[] bytes = decryptByPublicKey(Base64Utils.decode(data), publicKey);
+        byte[] bytes = decryptByPublicKey(Base64Tool.decode(data), publicKey);
         return new String(bytes);
     }
 
@@ -265,7 +265,7 @@ public class RSAUtils {
      */
     public static byte[] decryptByPublicKey(byte[] encryptedData,
                                             String publicKey) throws Exception {
-        byte[] keyBytes = Base64Utils.decode(publicKey);
+        byte[] keyBytes = Base64Tool.decode(publicKey);
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         Key publicK = keyFactory.generatePublic(x509KeySpec);

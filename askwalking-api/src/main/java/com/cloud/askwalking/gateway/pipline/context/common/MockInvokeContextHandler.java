@@ -1,9 +1,9 @@
 package com.cloud.askwalking.gateway.pipline.context.common;
 
-import com.alibaba.fastjson.JSON;
 import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.common.domain.R;
 import com.cloud.askwalking.common.exception.ErrorCode;
+import com.cloud.askwalking.common.tool.JSONTool;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import com.cloud.askwalking.gateway.pipline.AbstractGatewayContextHandler;
 import com.google.common.collect.Sets;
@@ -28,7 +28,7 @@ public class MockInvokeContextHandler extends AbstractGatewayContextHandler {
 
         try {
             if (gatewayInvokeContext.getMock()) {
-                Map map = JSON.parseObject(gatewayInvokeContext.getMockResponse(), Map.class);
+                Map map = JSONTool.toObject(gatewayInvokeContext.getMockResponse(), Map.class);
                 R<Object> r = R.success(map);
                 gatewayInvokeContext.setBaseResponse(r);
                 return false;

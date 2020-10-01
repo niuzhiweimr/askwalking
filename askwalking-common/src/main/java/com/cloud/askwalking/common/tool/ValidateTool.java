@@ -1,4 +1,4 @@
-package com.cloud.askwalking.common.utils;
+package com.cloud.askwalking.common.tool;
 
 import com.cloud.askwalking.common.domain.R;
 import com.cloud.askwalking.common.exception.ErrorCode;
@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  * @author niuzhiwei
  */
 @Slf4j
-public class ValidateUtils {
+public class ValidateTool {
 
     private static Validator validator;
 
@@ -204,7 +204,7 @@ public class ValidateUtils {
     private static final String V_31DAYS = "^((0?[1-9])|((1|2)[0-9])|30|31)$";
 
 
-    private ValidateUtils() {
+    private ValidateTool() {
     }
 
 

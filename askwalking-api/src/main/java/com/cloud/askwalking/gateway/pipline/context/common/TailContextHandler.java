@@ -1,14 +1,13 @@
 package com.cloud.askwalking.gateway.pipline.context.common;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cloud.askwalking.common.domain.R;
 import com.cloud.askwalking.common.exception.ErrorCode;
-import com.cloud.askwalking.common.utils.InputStreamUtil;
+import com.cloud.askwalking.common.tool.InputStreamTool;
+import com.cloud.askwalking.common.tool.JSONTool;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import com.cloud.askwalking.core.domain.ApiConfig;
 import com.cloud.askwalking.core.domain.GatewayMethodDefinition;
 import com.cloud.askwalking.gateway.pipline.AbstractGatewayContextHandler;
-import com.google.gson.Gson;
 import feign.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -55,8 +54,8 @@ public class TailContextHandler extends AbstractGatewayContextHandler {
         }
 
         log.info("[TailContextHandler] gateway invoke log GatewayMethodDefinition:{} ,requestURI:{} ,serviceParam:{} ,R:{}",
-                JSONObject.toJSONString(context.getMethodDefinition()), context.getRequestURI(),
-                JSONObject.toJSONString(context.getServiceParam()), JSONObject.toJSONString(context.getBaseResponse()));
+                JSONTool.toJson(context.getMethodDefinition()), context.getRequestURI(),
+                JSONTool.toJson(context.getServiceParam()), JSONTool.toJson(context.getBaseResponse()));
     }
 
 
@@ -73,7 +72,7 @@ public class TailContextHandler extends AbstractGatewayContextHandler {
             HttpServletResponse response = context.getResponse();
             servletOutputStream = response.getOutputStream();
             response.setContentType("application/json; charset=UTF-8");
-            servletOutputStream.write(JSONObject.toJSONString(context.getBaseResponse()).getBytes(StandardCharsets.UTF_8));
+            servletOutputStream.write(JSONTool.toJson(context.getBaseResponse()).getBytes(StandardCharsets.UTF_8));
             servletOutputStream.flush();
         } catch (Exception e) {
             log.error("[TailContextHandler]Http Response Error", e);
@@ -111,11 +110,11 @@ public class TailContextHandler extends AbstractGatewayContextHandler {
             if (result instanceof Response) {
                 Response response = (Response) result;
                 InputStream inputStream = response.body().asInputStream();
-                byte[] bytes = InputStreamUtil.readInputStream(inputStream);
-                r = new Gson().fromJson(new String(bytes), R.class);
+                byte[] bytes = InputStreamTool.readInputStream(inputStream);
+                r = JSONTool.toObject(new String(bytes), R.class);
             } else {
-                String resultJson = new Gson().toJson(result);
-                r = new Gson().fromJson(resultJson, R.class);
+                String resultJson = JSONTool.toJson(result);
+                r = JSONTool.toObject(resultJson, R.class);
             }
 
             context.setBaseResponse(r);

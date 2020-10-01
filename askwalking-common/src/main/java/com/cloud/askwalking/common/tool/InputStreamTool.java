@@ -1,4 +1,4 @@
-package com.cloud.askwalking.common.utils;
+package com.cloud.askwalking.common.tool;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.io.InputStream;
 /**
  * @author niuzhiwei
  */
-public class InputStreamUtil {
+public class InputStreamTool {
 
     /**
      * 读取应流

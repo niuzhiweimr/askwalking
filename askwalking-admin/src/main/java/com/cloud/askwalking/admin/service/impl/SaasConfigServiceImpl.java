@@ -9,8 +9,8 @@ import com.cloud.askwalking.admin.vo.SaasResourceVO;
 import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.common.domain.R;
 import com.cloud.askwalking.common.enums.GatewayErrorCode;
-import com.cloud.askwalking.common.utils.IDUtil;
-import com.cloud.askwalking.common.utils.ValidateUtils;
+import com.cloud.askwalking.common.tool.IDTool;
+import com.cloud.askwalking.common.tool.ValidateTool;
 import com.cloud.askwalking.repository.dao.SaasConfigMapper;
 import com.cloud.askwalking.repository.dao.SaasResourceMapper;
 import com.cloud.askwalking.repository.model.SaasConfigDO;
@@ -107,7 +107,7 @@ public class SaasConfigServiceImpl implements SaasConfigService {
     @Override
     public R addSaasConfig(AddSaasConfigDTO request) {
 
-        R validateResult = ValidateUtils.validateResult(request);
+        R validateResult = ValidateTool.validateResult(request);
         if (validateResult.failed()) {
             return validateResult;
         }
@@ -119,7 +119,7 @@ public class SaasConfigServiceImpl implements SaasConfigService {
 
         SaasConfigDO saasConfigDO = new SaasConfigDO();
         BeanUtils.copyProperties(request, saasConfigDO);
-        saasConfigDO.setId(IDUtil.generatePK());
+        saasConfigDO.setId(IDTool.generatePK());
 
         saasConfigMapper.insertSelective(saasConfigDO);
 
@@ -192,7 +192,7 @@ public class SaasConfigServiceImpl implements SaasConfigService {
     @Override
     public R addSaasResource(AddSaasResourceDTO request) {
 
-        R validateResult = ValidateUtils.validateResult(request);
+        R validateResult = ValidateTool.validateResult(request);
         if (validateResult.failed()) {
             return validateResult;
         }
@@ -218,7 +218,7 @@ public class SaasConfigServiceImpl implements SaasConfigService {
 
         SaasResourceDO saasResourceDO = new SaasResourceDO();
         BeanUtils.copyProperties(request, saasResourceDO);
-        saasResourceDO.setId(IDUtil.generatePK());
+        saasResourceDO.setId(IDTool.generatePK());
         saasResourceMapper.insertSelective(saasResourceDO);
 
         return R.success();
@@ -227,7 +227,7 @@ public class SaasConfigServiceImpl implements SaasConfigService {
     @Override
     public R delSaasResource(ModifySaasResourceDTO request) {
 
-        R validateResult = ValidateUtils.validateResult(request);
+        R validateResult = ValidateTool.validateResult(request);
         if (validateResult.failed()) {
             return validateResult;
         }

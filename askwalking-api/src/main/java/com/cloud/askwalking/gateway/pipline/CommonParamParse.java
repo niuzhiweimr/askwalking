@@ -1,8 +1,8 @@
 package com.cloud.askwalking.gateway.pipline;
 
-import com.alibaba.fastjson.JSON;
 import com.cloud.askwalking.common.constants.GatewayConstant;
-import com.cloud.askwalking.common.utils.Base64Utils;
+import com.cloud.askwalking.common.tool.Base64Tool;
+import com.cloud.askwalking.common.tool.JSONTool;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,7 +34,7 @@ public class CommonParamParse {
                         sb.append(new String(b, StandardCharsets.UTF_8));
                     }
                     String requestStr = sb.toString();
-                    Map<String, Object> params = JSON.parseObject(requestStr);
+                    Map params = JSONTool.toObject(requestStr, Map.class);
                     gatewayInvokeContext.setServiceParam(params);
                 } catch (Exception e) {
                     log.error("[CommonParamParseUtil]#handleParamParse Get body body request parameter conversion exception" +
@@ -66,7 +66,7 @@ public class CommonParamParse {
                 sb.append(new String(b, StandardCharsets.UTF_8));
             }
 
-            byte[] decode = Base64Utils.decode(sb.toString());
+            byte[] decode = Base64Tool.decode(sb.toString());
             String requestStr = new String(decode, StandardCharsets.UTF_8);
             gatewayInvokeContext.setServiceParam(requestStr);
         } catch (Exception e) {

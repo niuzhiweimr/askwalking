@@ -1,9 +1,9 @@
 package com.cloud.askwalking.gateway.pipline.context.common;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.common.domain.R;
 import com.cloud.askwalking.common.exception.ErrorCode;
+import com.cloud.askwalking.common.tool.JSONTool;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import com.cloud.askwalking.gateway.pipline.AbstractGatewayContextHandler;
 import com.google.common.collect.Sets;
@@ -65,8 +65,8 @@ public class RpcInvokeContextHandler extends AbstractGatewayContextHandler {
 
         Object result = genericService.$invoke(gatewayInvokeContext.getApiMethod(),
                 new String[]{gatewayInvokeContext.getApiRequestClass()}, new Object[]{gatewayInvokeContext.getServiceParam()});
-        String resultJson = JSONObject.toJSONString(result);
-        R r = JSONObject.parseObject(resultJson, R.class);
+        String resultJson = JSONTool.toJson(result);
+        R r = JSONTool.toObject(resultJson, R.class);
         gatewayInvokeContext.setBaseResponse(r);
     }
 

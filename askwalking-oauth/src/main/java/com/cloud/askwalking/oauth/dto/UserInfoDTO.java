@@ -1,6 +1,6 @@
 package com.cloud.askwalking.oauth.dto;
 
-import com.alibaba.fastjson.JSONObject;
+import com.cloud.askwalking.common.tool.JSONTool;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,7 +32,7 @@ public class UserInfoDTO implements Serializable {
     private String customerName;
 
     public Map toMap() {
-        String jsonStr = JSONObject.toJSONString(this);
-        return JSONObject.parseObject(jsonStr, Map.class);
+        String jsonStr = JSONTool.toJson(this);
+        return JSONTool.toObject(jsonStr, Map.class);
     }
 }

@@ -1,10 +1,9 @@
 package com.cloud.askwalking.gateway.pipline.context.saas;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.common.enums.GatewayErrorCode;
-import com.cloud.askwalking.common.utils.RSAUtils;
+import com.cloud.askwalking.common.tool.JSONTool;
+import com.cloud.askwalking.common.tool.RSATool;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import com.cloud.askwalking.gateway.pipline.CommonParamParse;
 import com.cloud.askwalking.gateway.pipline.context.common.AbstractSignCheckContextHandler;
@@ -30,7 +29,7 @@ public class SaasSignCheckContextHandler extends AbstractSignCheckContextHandler
         try {
             String outerPublicKey = context.getSaasConfigInfo().getOuterPublicKey();
             String sourceSignParam = String.valueOf(context.getServiceParam());
-            String sourceParam = RSAUtils.decryptByPublicKey(sourceSignParam, outerPublicKey);
+            String sourceParam = RSATool.decryptByPublicKey(sourceSignParam, outerPublicKey);
             String timestamp = context.getSaasConfigInfo().getTimestamp();
             String confusionParam = CommonParamParse.handleSaasParamConfusion(context.getOpenId()
                     , timestamp, sourceSignParam);
@@ -52,13 +51,13 @@ public class SaasSignCheckContextHandler extends AbstractSignCheckContextHandler
 
         try {
             if (log.isDebugEnabled()) {
-                log.debug("check sign request param:{}", JSONObject.toJSONString(context.getSaasConfigInfo()));
+                log.debug("check sign request param:{}", JSONTool.toJson(context.getSaasConfigInfo()));
             }
             String confusionParam = context.getSaasConfigInfo().getConfusionParam();
             String outerPublicKey = context.getSaasConfigInfo().getOuterPublicKey();
             String timestamp = context.getSaasConfigInfo().getTimestamp();
             String outerSign = context.getSaasConfigInfo().getOuterSign();
-            if (!RSAUtils.verify(confusionParam, timestamp, outerPublicKey, outerSign)) {
+            if (!RSATool.verify(confusionParam, timestamp, outerPublicKey, outerSign)) {
                 if (log.isDebugEnabled()) {
                     log.debug("check signature error request param confusionParam:{},outerPublicKey{},outerSign{}",
                             confusionParam, outerPublicKey, outerSign);
@@ -80,7 +79,7 @@ public class SaasSignCheckContextHandler extends AbstractSignCheckContextHandler
      * @param sourceParam
      */
     private void buildServiceParam(GatewayInvokeContext context, String sourceParam) {
-        Map<String, Object> serviceParam = JSON.parseObject(sourceParam);
+        Map serviceParam = JSONTool.toObject(sourceParam, Map.class);
         context.setServiceParam(serviceParam);
     }
 

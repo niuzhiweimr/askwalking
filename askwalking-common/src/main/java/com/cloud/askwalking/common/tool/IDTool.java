@@ -1,11 +1,11 @@
-package com.cloud.askwalking.common.utils;
+package com.cloud.askwalking.common.tool;
 
 import java.util.UUID;
 
 /**
  * @author niuzhiwei
  */
-public class IDUtil {
+public class IDTool {
     /**
      * 功能描述: <br>
      * 〈生成uuid〉

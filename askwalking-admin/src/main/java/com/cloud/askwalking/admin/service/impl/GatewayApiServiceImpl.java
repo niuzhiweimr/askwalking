@@ -9,8 +9,8 @@ import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.common.domain.R;
 import com.cloud.askwalking.common.enums.GatewayErrorCode;
 import com.cloud.askwalking.common.exception.ErrorCode;
-import com.cloud.askwalking.common.utils.IDUtil;
-import com.cloud.askwalking.common.utils.ValidateUtils;
+import com.cloud.askwalking.common.tool.IDTool;
+import com.cloud.askwalking.common.tool.ValidateTool;
 import com.cloud.askwalking.core.HelperService;
 import com.cloud.askwalking.repository.dao.ConfigureApiMapper;
 import com.cloud.askwalking.repository.model.ConfigureApiDO;
@@ -100,7 +100,7 @@ public class GatewayApiServiceImpl implements GatewayApiService {
     @Override
     public R<Boolean> addApi(AddConfigureApiDTO request) {
 
-        R validateResult = ValidateUtils.validateResult(request);
+        R validateResult = ValidateTool.validateResult(request);
         if (validateResult.failed()) {
             return validateResult;
         }
@@ -122,7 +122,7 @@ public class GatewayApiServiceImpl implements GatewayApiService {
 
         ConfigureApiDO configureApiDO = new ConfigureApiDO();
         BeanUtils.copyProperties(request, configureApiDO);
-        configureApiDO.setId(IDUtil.generatePK());
+        configureApiDO.setId(IDTool.generatePK());
 
         try {
             configureApiMapper.insertSelective(configureApiDO);
@@ -140,7 +140,7 @@ public class GatewayApiServiceImpl implements GatewayApiService {
     @Override
     public R<Boolean> updateApi(ModifyConfigureApiDTO request) {
 
-        R validateResult = ValidateUtils.validateResult(request);
+        R validateResult = ValidateTool.validateResult(request);
         if (validateResult.failed()) {
             return validateResult;
         }

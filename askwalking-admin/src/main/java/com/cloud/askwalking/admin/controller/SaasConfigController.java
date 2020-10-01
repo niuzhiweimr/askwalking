@@ -1,9 +1,5 @@
 package com.cloud.askwalking.admin.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.cloud.askwalking.common.domain.R;
-import com.cloud.askwalking.common.exception.ErrorCode;
-import com.cloud.askwalking.common.utils.RSAUtils;
 import com.cloud.askwalking.admin.dto.AddSaasConfigDTO;
 import com.cloud.askwalking.admin.dto.AddSaasResourceDTO;
 import com.cloud.askwalking.admin.dto.ModifySaasResourceDTO;
@@ -11,6 +7,10 @@ import com.cloud.askwalking.admin.dto.QuerySaasConfigDTO;
 import com.cloud.askwalking.admin.service.SaasConfigService;
 import com.cloud.askwalking.admin.vo.RsaGeneratorVO;
 import com.cloud.askwalking.admin.vo.SaasConfigVO;
+import com.cloud.askwalking.common.domain.R;
+import com.cloud.askwalking.common.exception.ErrorCode;
+import com.cloud.askwalking.common.tool.JSONTool;
+import com.cloud.askwalking.common.tool.RSATool;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -50,7 +50,7 @@ public class SaasConfigController {
         if (!this.token.equals(token)) {
             return R.fail(ErrorCode.NOT_SUPPORT_OPERATOR);
         }
-        log.info("listSaasInfo requestParams：{} ", JSONObject.toJSONString(request));
+        log.info("listSaasInfo requestParams：{} ", JSONTool.toJson(request));
         return saasConfigService.listSaasInfo(request);
     }
 
@@ -63,7 +63,7 @@ public class SaasConfigController {
         if (!this.token.equals(token)) {
             return R.fail(ErrorCode.NOT_SUPPORT_OPERATOR);
         }
-        log.info("addSaas requestParams：{} ", JSONObject.toJSONString(request));
+        log.info("addSaas requestParams：{} ", JSONTool.toJson(request));
         return saasConfigService.addSaasConfig(request);
     }
 
@@ -101,7 +101,7 @@ public class SaasConfigController {
         if (!this.token.equals(token)) {
             return R.fail(ErrorCode.NOT_SUPPORT_OPERATOR);
         }
-        log.info("addSaasResource requestParams：{} ", JSONObject.toJSONString(request));
+        log.info("addSaasResource requestParams：{} ", JSONTool.toJson(request));
         return saasConfigService.addSaasResource(request);
     }
 
@@ -114,7 +114,7 @@ public class SaasConfigController {
         if (!this.token.equals(token)) {
             return R.fail(ErrorCode.NOT_SUPPORT_OPERATOR);
         }
-        log.info("delSaasResource requestParams：{} ", JSONObject.toJSONString(request));
+        log.info("delSaasResource requestParams：{} ", JSONTool.toJson(request));
         return saasConfigService.delSaasResource(request);
     }
 
@@ -131,12 +131,12 @@ public class SaasConfigController {
 
         RsaGeneratorVO rsaGeneratorVO = new RsaGeneratorVO();
         try {
-            Map<String, Object> innerKeyPair = RSAUtils.genKeyPair();
-            rsaGeneratorVO.setInnerPrivateKey(RSAUtils.getPrivateKey(innerKeyPair));
-            rsaGeneratorVO.setInnerPublicKey(RSAUtils.getPublicKey(innerKeyPair));
-            Map<String, Object> outerKeyPair = RSAUtils.genKeyPair();
-            rsaGeneratorVO.setOuterPrivateKey(RSAUtils.getPrivateKey(outerKeyPair));
-            rsaGeneratorVO.setOuterPublicKey(RSAUtils.getPublicKey(outerKeyPair));
+            Map<String, Object> innerKeyPair = RSATool.genKeyPair();
+            rsaGeneratorVO.setInnerPrivateKey(RSATool.getPrivateKey(innerKeyPair));
+            rsaGeneratorVO.setInnerPublicKey(RSATool.getPublicKey(innerKeyPair));
+            Map<String, Object> outerKeyPair = RSATool.genKeyPair();
+            rsaGeneratorVO.setOuterPrivateKey(RSATool.getPrivateKey(outerKeyPair));
+            rsaGeneratorVO.setOuterPublicKey(RSATool.getPublicKey(outerKeyPair));
         } catch (Exception e) {
             log.error("[RsaGeneratorController] generator exception:", e);
             return R.fail();

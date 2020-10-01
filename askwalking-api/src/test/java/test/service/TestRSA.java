@@ -1,7 +1,7 @@
 package test.service;
 
-import com.cloud.askwalking.common.utils.Base64Utils;
-import com.cloud.askwalking.common.utils.RSAUtils;
+import com.cloud.askwalking.common.tool.Base64Tool;
+import com.cloud.askwalking.common.tool.RSATool;
 import com.cloud.askwalking.gateway.pipline.CommonParamParse;
 
 public class TestRSA {
@@ -20,17 +20,17 @@ public class TestRSA {
         String openId = "masget20200628";
         //使用私钥加密请求数据并对加密数据使用base64编码
         String param = "{\"highwayCode\":\"JIANGSU\",\"orderId\":\"NO123456789\"}";
-        String signStr = RSAUtils.encryptByPrivateKey(param, outerPrivateKey);
-        String encode = Base64Utils.encode(signStr.getBytes());
+        String signStr = RSATool.encryptByPrivateKey(param, outerPrivateKey);
+        String encode = Base64Tool.encode(signStr.getBytes());
         System.out.println("编码密文 encode: " + encode);
         //生成数据签名
         String confusionParam = CommonParamParse.handleSaasParamConfusion(openId, String.valueOf(timestamp), signStr);
         System.out.println("confusionParam :" + confusionParam);
-        String sign = RSAUtils.sign(confusionParam, String.valueOf(timestamp), outerPrivateKey);
+        String sign = RSATool.sign(confusionParam, String.valueOf(timestamp), outerPrivateKey);
         System.out.println("数字签名 sign: " + sign);
 
         //公钥验签
-        boolean verify = RSAUtils.verify(confusionParam, String.valueOf(timestamp), outerPublicKey, sign);
+        boolean verify = RSATool.verify(confusionParam, String.valueOf(timestamp), outerPublicKey, sign);
         System.out.println("验证签名 verify:" + verify);
 
     }

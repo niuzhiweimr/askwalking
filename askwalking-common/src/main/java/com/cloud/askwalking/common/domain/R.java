@@ -2,6 +2,7 @@ package com.cloud.askwalking.common.domain;
 
 import com.cloud.askwalking.common.exception.ErrorCode;
 import com.cloud.askwalking.common.exception.StatusDefinition;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;

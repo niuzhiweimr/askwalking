@@ -1,7 +1,7 @@
 package com.cloud.askwalking.admin.service.impl;
 
-import com.cloud.askwalking.common.utils.MD5Helper;
-import com.cloud.askwalking.common.utils.ValidateUtils;
+import com.cloud.askwalking.common.tool.MD5Tool;
+import com.cloud.askwalking.common.tool.ValidateTool;
 import com.cloud.askwalking.common.domain.R;
 import com.cloud.askwalking.common.exception.ErrorCode;
 import com.cloud.askwalking.repository.dao.UserMapper;
@@ -32,7 +32,7 @@ public class GatewayUserServiceImpl implements GatewayUserService {
     @Override
     public R<Boolean> login(LoginDTO request) {
 
-        R validateResult = ValidateUtils.validateResult(request);
+        R validateResult = ValidateTool.validateResult(request);
         if (validateResult.failed()) {
             return validateResult;
         }
@@ -46,7 +46,7 @@ public class GatewayUserServiceImpl implements GatewayUserService {
 
         String password;
         try {
-            password = MD5Helper.getDefaultMd5String(request.getPassword());
+            password = MD5Tool.getDefaultMd5String(request.getPassword());
         } catch (Exception e) {
             log.error("[GatewayUserService] MD5加密异常：", e);
             return R.fail(ErrorCode.SYSTEM_ERROR);

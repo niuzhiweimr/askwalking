@@ -1,14 +1,14 @@
 package com.cloud.askwalking.admin.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cloud.askwalking.admin.dto.AddConfigureApiDTO;
 import com.cloud.askwalking.admin.dto.ModifyConfigureApiDTO;
 import com.cloud.askwalking.admin.dto.QueryConfigureApiDTO;
 import com.cloud.askwalking.admin.service.GatewayApiService;
 import com.cloud.askwalking.admin.vo.GatewayApiVO;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.cloud.askwalking.common.domain.R;
 import com.cloud.askwalking.common.exception.ErrorCode;
+import com.cloud.askwalking.common.tool.JSONTool;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +48,7 @@ public class GatewayApiController {
         if (!this.token.equals(token)) {
             return R.fail(ErrorCode.NOT_SUPPORT_OPERATOR);
         }
-        log.info("listApi requestParams：{} ", JSONObject.toJSONString(request));
+        log.info("listApi requestParams：{} ", JSONTool.toJson(request));
         return gatewayApiService.listApi(request);
     }
 
@@ -61,7 +61,7 @@ public class GatewayApiController {
         if (!this.token.equals(token)) {
             return R.fail(ErrorCode.NOT_SUPPORT_OPERATOR);
         }
-        log.info("addApi requestParams：{} ", JSONObject.toJSONString(request));
+        log.info("addApi requestParams：{} ", JSONTool.toJson(request));
         return gatewayApiService.addApi(request);
     }
 
@@ -74,7 +74,7 @@ public class GatewayApiController {
         if (!this.token.equals(token)) {
             return R.fail(ErrorCode.NOT_SUPPORT_OPERATOR);
         }
-        log.info("updateApi requestParams：{} ", JSONObject.toJSONString(request));
+        log.info("updateApi requestParams：{} ", JSONTool.toJson(request));
         return gatewayApiService.updateApi(request);
     }
 

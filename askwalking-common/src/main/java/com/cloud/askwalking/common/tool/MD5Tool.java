@@ -1,4 +1,4 @@
-package com.cloud.askwalking.common.utils;
+package com.cloud.askwalking.common.tool;
 
 import java.security.MessageDigest;
 
@@ -7,7 +7,7 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 /**
  * @author 牛志伟
  */
-public class MD5Helper {
+public class MD5Tool {
 
 
     public static String getDefaultMd5String(String source) throws Exception {

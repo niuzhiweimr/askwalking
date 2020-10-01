@@ -69,7 +69,7 @@
         <itext-asian.version>5.2.0</itext-asian.version>
         <itextpdf.version>5.5.10</itextpdf.version>
         <javassist.version>3.18.1-GA</javassist.version>
-        <jackson-datatype-jsr310.version>2.9.8</jackson-datatype-jsr310.version>
+        <jackson.version>2.9.8</jackson.version>
         <jacob.version>1.18</jacob.version>
         <jedis.version>2.9.0</jedis.version>
         <jjwt.version>0.9.1</jjwt.version>

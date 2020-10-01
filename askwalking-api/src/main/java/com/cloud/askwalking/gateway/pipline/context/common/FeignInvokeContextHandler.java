@@ -3,11 +3,11 @@ package com.cloud.askwalking.gateway.pipline.context.common;
 import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.common.domain.R;
 import com.cloud.askwalking.common.exception.ErrorCode;
-import com.cloud.askwalking.common.utils.InputStreamUtil;
+import com.cloud.askwalking.common.tool.InputStreamTool;
+import com.cloud.askwalking.common.tool.JSONTool;
 import com.cloud.askwalking.core.context.GatewayInvokeContext;
 import com.cloud.askwalking.gateway.pipline.AbstractGatewayContextHandler;
 import com.google.common.collect.Sets;
-import com.google.gson.Gson;
 import feign.Request;
 import feign.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -70,8 +70,8 @@ public class FeignInvokeContextHandler extends AbstractGatewayContextHandler {
         Request request = buildFeignRequest(gatewayInvokeContext);
         Response execute = feignClient.execute(request, gatewayInvokeContext.getFeignRequestOptions());
 
-        byte[] bytes = InputStreamUtil.readInputStream(execute.body().asInputStream());
-        R r = new Gson().fromJson(new String(bytes), R.class);
+        byte[] bytes = InputStreamTool.readInputStream(execute.body().asInputStream());
+        R r = JSONTool.toObject(new String(bytes), R.class);
         gatewayInvokeContext.setBaseResponse(r);
     }
 
@@ -83,7 +83,7 @@ public class FeignInvokeContextHandler extends AbstractGatewayContextHandler {
      */
     private Request buildFeignRequest(GatewayInvokeContext gatewayInvokeContext) {
 
-        byte[] body = new Gson().toJson(gatewayInvokeContext.getServiceParam()).getBytes();
+        byte[] body = JSONTool.toJson(gatewayInvokeContext.getServiceParam()).getBytes();
 
         switch (gatewayInvokeContext.getRequestMethod()) {
             case GatewayConstant.HTTP_METHOD_GET:
