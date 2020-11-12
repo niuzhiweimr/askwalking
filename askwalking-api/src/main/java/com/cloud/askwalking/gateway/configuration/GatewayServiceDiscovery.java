@@ -1,10 +1,10 @@
 package com.cloud.askwalking.gateway.configuration;
 
+import com.cloud.askwalking.common.constants.GatewayConstant;
 import com.cloud.askwalking.core.AbstractGatewayServiceDiscovery;
 import com.cloud.askwalking.core.domain.ApiConfig;
 import com.cloud.askwalking.core.domain.FlowControlRule;
 import com.cloud.askwalking.core.domain.GatewayMethodDefinition;
-import com.cloud.askwalking.gateway.pipline.GatewayInvokePipeline;
 import com.cloud.askwalking.gateway.pipline.context.flowcontrol.FlowControlRuleHolder;
 import com.cloud.askwalking.gateway.repository.RepositoryService;
 import com.cloud.askwalking.repository.model.ConfigureApiDO;
@@ -16,7 +16,10 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author niuzhiwei
@@ -25,7 +28,8 @@ import java.util.*;
 @SuppressWarnings("ALL")
 public class GatewayServiceDiscovery extends AbstractGatewayServiceDiscovery implements ApplicationContextAware {
 
-    private final Set<String> GATEWAY_HANDLE_TYPE = new HashSet<>();
+    private final Set<String> GATEWAY_HANDLE_TYPE_ALL = Sets.newHashSet(GatewayConstant.ADMIN
+            , GatewayConstant.API, GatewayConstant.SAAS);
 
     private AbstractGatewayServiceRouter serviceRouter;
 
@@ -71,8 +75,6 @@ public class GatewayServiceDiscovery extends AbstractGatewayServiceDiscovery imp
             }
 
             configureApiDOList.forEach(this::saveGatewayMethodDefinition);
-
-            buildHandleType(configureApiDOList);
 
         } catch (BeansException e) {
             log.error("[GatewayServiceDiscovery]processGatewayServices Error", e);
@@ -221,9 +223,7 @@ public class GatewayServiceDiscovery extends AbstractGatewayServiceDiscovery imp
             GatewayMethodDefinition methodDefinition = this.getMethodDefinition(uri);
 
             FlowControlRuleHolder.addInterfaceRule(methodDefinition);
-            buildHandleType(configureApiDo);
             buildHandleMapping(configureApiDo);
-            buildGatewayInvokePipeline();
             FlowControlRuleHolder.reloadFlowRules();
 
         } catch (Exception e) {
@@ -231,43 +231,10 @@ public class GatewayServiceDiscovery extends AbstractGatewayServiceDiscovery imp
         }
     }
 
-    /**
-     * 构建处理类型
-     *
-     * @param configureApiDOList
-     */
-    private void buildHandleType(List<ConfigureApiDO> configureApiDOList) {
-
-        configureApiDOList.forEach(configureApiDO -> {
-            if (!this.GATEWAY_HANDLE_TYPE.contains(configureApiDO.getApiType())) {
-                GATEWAY_HANDLE_TYPE.add(configureApiDO.getApiType());
-            }
-        });
-    }
-
-    /**
-     * 构建处理类型
-     *
-     * @param configureApiDo
-     */
-    private void buildHandleType(ConfigureApiDO configureApiDo) {
-
-        if (!this.GATEWAY_HANDLE_TYPE.contains(configureApiDo.getApiType())) {
-            GATEWAY_HANDLE_TYPE.add(configureApiDo.getApiType());
-        }
-    }
-
-    /**
-     * 构建网关调用流水线
-     */
-    private void buildGatewayInvokePipeline() {
-        GatewayInvokePipeline gatewayInvokePipeline = this.applicationContext.getBean(GatewayInvokePipeline.class);
-        gatewayInvokePipeline.init();
-    }
 
     public boolean matchHandleType(Set<String> handleType) {
         Set<String> tmp = Sets.newHashSet(handleType);
-        tmp.retainAll(this.GATEWAY_HANDLE_TYPE);
+        tmp.retainAll(this.GATEWAY_HANDLE_TYPE_ALL);
         return !tmp.isEmpty();
     }
 
