@@ -122,7 +122,7 @@
         <repository>
             <id>nexus-releases</id>
             <name>Packaging release Repository</name>
-            <url>http://${nexus-server-addr}/nexus/content/repositories/releases/</url>
+            <url>https://${nexus-server-addr}/nexus/content/repositories/releases/</url>
         </repository>
     </distributionManagement>
 
